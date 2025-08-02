@@ -72,6 +72,9 @@ export default {
 				'crypto-positive': 'hsl(var(--crypto-positive))',
 				'crypto-negative': 'hsl(var(--crypto-negative))',
 			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

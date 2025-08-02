@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,17 +19,21 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Custom crypto newsletter color palette */
+    --primary: 225 24% 15%;        /* #1E1E2F - Deep Navy */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 176 100% 41%;     /* #00CFAF - Vibrant Teal */
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 48 100% 50%;         /* #FFC300 - Warm Gold */
+    --accent-foreground: 0 0% 0%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 0 0% 96%;             /* #F5F5F5 - Light Gray */
+    --muted-foreground: 0 0% 45%;  /* #727272 - Medium Gray */
+
+    --dark-gray: 0 0% 18%;         /* #2E2E2E - Dark Gray */
+    --light-gray: 0 0% 96%;        /* #F5F5F5 - Light Gray */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -37,6 +43,10 @@ All colors MUST be HSL.
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    /* Crypto ticker specific colors */
+    --crypto-positive: 142 85% 40%;  /* #10B981 - Green */
+    --crypto-negative: 0 85% 60%;    /* #EF4444 - Red */
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +110,26 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat font-bold;
+  }
+}
+
+@layer utilities {
+  /* Crypto ticker marquee animation */
+  @keyframes crypto-scroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .crypto-marquee {
+    animation: crypto-scroll 60s linear infinite;
   }
 }

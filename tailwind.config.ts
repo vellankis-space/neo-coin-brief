@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'montserrat': ['Montserrat', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +65,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom crypto newsletter colors
+				'dark-gray': 'hsl(var(--dark-gray))',
+				'light-gray': 'hsl(var(--light-gray))',
+				'crypto-positive': 'hsl(var(--crypto-positive))',
+				'crypto-negative': 'hsl(var(--crypto-negative))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

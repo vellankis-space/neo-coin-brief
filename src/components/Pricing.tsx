@@ -9,8 +9,9 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-import { CheckCircle, Lock, Shield } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Separator } from "@/components/ui/separator";
+import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown } from "lucide-react";
 import { loadStripe } from '@stripe/stripe-js';
 
 interface PricingProps {
@@ -20,6 +21,7 @@ interface PricingProps {
 const stripePromise = loadStripe(import.meta.env.VITE_NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Pricing: React.FC<PricingProps> = ({ customerEmail }) => {
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const handleSubscription = async () => {
     const stripe = await stripePromise;
 
@@ -80,61 +82,73 @@ const Pricing: React.FC<PricingProps> = ({ customerEmail }) => {
                 <span className="text-5xl font-bold text-gray-900">$9</span>
                 <span className="text-xl text-gray-500 ml-2">/month</span>
               </div>
-              <p className="text-sm text-[#00CFAF] italic">That's only $0.30 per newsletter!</p>
+              <p className="text-sm text-[#00CFAF] italic">That's only $0.10 per newsletter!</p>
             </CardHeader>
             <CardContent>
-              <ul className="mt-8 space-y-4">
+              <ul className="mt-6 space-y-4">
                 <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
+                  <CircleCheck className="text-green-500 mr-3" />
                   <span>3 daily newsletters (8 AM, 1 PM, 6 PM UTC)</span>
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
+                  <CircleCheck className="text-green-500 mr-3" />
                   <span>Top 20 AI-curated crypto insights</span>
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
+                  <CircleCheck className="text-green-500 mr-3" />
                   <span>Breaking news alerts</span>
                 </li>
-                <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
-                  <span>Mobile-optimized email format</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
-                  <span>Unsubscribe anytime</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="text-green-500 mr-3" />
-                  <span>No ads or spam</span>
-                </li>
               </ul>
+              <Separator className="my-6" />
+              <Collapsible open={isFeaturesOpen} onOpenChange={setIsFeaturesOpen}>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" className="w-full flex items-center justify-center text-sm font-semibold text-gray-600 hover:text-gray-900">
+                    Show all features
+                    <ChevronDown className={`w-4 h-4 ml-2 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <ul className="mt-4 space-y-4">
+                    <li className="flex items-center">
+                      <CircleCheck className="text-green-500 mr-3" />
+                      <span>Mobile-optimized email format</span>
+                    </li>
+                    <li className="flex items-center">
+                      <CircleCheck className="text-green-500 mr-3" />
+                      <span>Unsubscribe anytime</span>
+                    </li>
+                    <li className="flex items-center">
+                      <CircleCheck className="text-green-500 mr-3" />
+                      <span>No ads or spam</span>
+                    </li>
+                  </ul>
+                </CollapsibleContent>
+              </Collapsible>
             </CardContent>
             <CardFooter className="flex flex-col items-center">
               <Button
                 onClick={handleSubscription}
-                className="w-full mt-8 bg-[#00CFAF] text-white rounded-lg py-4 text-lg hover:bg-[#00b89f] hover:scale-102 transition-transform"
+                className="w-full mt-6 bg-[#00CFAF] text-white rounded-lg py-4 text-lg hover:bg-[#00b89f] hover:scale-102 transition-transform"
               >
                 Start My Subscription
               </Button>
               <div className="text-center mt-4 text-sm text-gray-500">
                 <div className="flex items-center justify-center">
-                  <Lock className="w-4 h-4 mr-2" />
+                  <LockKeyhole className="w-4 h-4 mr-2" />
                   <span>Secure payment via Stripe</span>
                 </div>
                 <div className="flex items-center justify-center mt-2">
-                  <Shield className="w-4 h-4 mr-2" />
+                  <ShieldHalf className="w-4 h-4 mr-2" />
                   <span>24/7 Email Support</span>
                 </div>
               </div>
             </CardFooter>
           </Card>
         </div>
-
-        
       </div>
     </section>
   );
 };
 
 export default Pricing;
+

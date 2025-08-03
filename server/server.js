@@ -1,6 +1,9 @@
-require('dotenv').config();
-const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import axios from 'axios';
+import Stripe from 'stripe';
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -27,6 +30,28 @@ app.post('/api/create-checkout-session', async (req, res) => {
   } catch (error) {
     console.error('Error creating checkout session:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/crypto-prices', async (req, res) => {
+  try {
+    const response = await axios.get('https://api.binance.com/api/v3/ticker/24hr');
+    // Filter for USDT pairs and sort by quoteVolume (as a proxy for market cap)
+    // Note: Binance API does not directly provide market cap. For true market cap ranking,
+    // a different API (e.g., CoinGecko, CoinMarketCap) would be required.
+    const top10ByVolume = response.data
+      .filter(ticker => ticker.symbol.endsWith('USDT'))
+      .sort((a, b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))
+      .slice(0, 10)
+      .map(ticker => ({
+        symbol: ticker.symbol,
+        price: parseFloat(ticker.lastPrice).toFixed(2),
+        priceChangePercent: parseFloat(ticker.priceChangePercent).toFixed(2),
+      }));
+    res.json(top10ByVolume);
+  } catch (error) {
+    console.error('Error fetching crypto prices:', error);
+    res.status(500).json({ error: 'Failed to fetch crypto prices' });
   }
 });
 

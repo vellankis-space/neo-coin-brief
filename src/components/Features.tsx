@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Zap, Clock, Brain, Shield } from 'lucide-react';
+import { Rocket, Hourglass, Lightbulb, ShieldCheck } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const containerVariants = {
@@ -26,25 +26,25 @@ const itemVariants = {
 const Features = () => {
   const features = [
     {
-      icon: Zap,
+      icon: Rocket,
       title: "Effortless Efficiency",
       description: "Stop endless scrolling. Get only what matters—curated crypto insights in minutes, not hours.",
       iconBg: "bg-yellow-500"
     },
     {
-      icon: Clock,
+      icon: Hourglass,
       title: "Perfect Work-Life Balance",
       description: "Stay ahead during business hours. Spend your evenings living, not researching crypto trends.",
       iconBg: "bg-orange-500"
     },
     {
-      icon: Brain,
+      icon: Lightbulb,
       title: "AI-Powered Intelligence",
       description: "Our AI filters out noise, FUD, and spam. Only genuine, high-quality insights reach your inbox.",
       iconBg: "bg-purple-500"
     },
     {
-      icon: Shield,
+      icon: ShieldCheck,
       title: "Curated for Accuracy",
       description: "Every tweet is fact-checked and refined. No more misleading information or crypto scams.",
       iconBg: "bg-green-500"
@@ -80,13 +80,13 @@ const Features = () => {
             const IconComponent = feature.icon;
             return (
               <motion.div key={index} variants={itemVariants}>
-                <Card className="backdrop-blur-glass bg-glass-bg border-glass-border p-6 h-full shadow-glass hover:shadow-glow transition-all duration-500 hover:scale-102 group cursor-pointer">
+                <Card className="backdrop-blur-glass bg-glass-bg border-glass-border p-6 h-full shadow-glass transition-all duration-500 hover:scale-102 group cursor-pointer">
                   <CardContent className="p-0">
                     <div className="flex flex-col items-center text-center">
                       <div className={`w-16 h-16 ${feature.iconBg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                         <IconComponent className="w-8 h-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3 group-hover:bg-gradient-text group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                      <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3 transition-all duration-300">
                         {feature.title}
                       </h3>
                       <p className="text-muted-foreground leading-relaxed">

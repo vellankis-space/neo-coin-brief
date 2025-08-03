@@ -1,23 +1,23 @@
-import { Search, Cpu, Mail } from 'lucide-react';
+import { Megaphone, Bot, MailCheck } from 'lucide-react';
 
 const HowItWorks = () => {
   const steps = [
     {
-      icon: Search,
+      icon: Megaphone,
       title: "AI Scrapes Twitter",
-      description: "Our AI monitors crypto Twitter 24/7, identifying the top 20 most engaging tweets from trusted sources.",
+      description: "AI monitors crypto Twitter 24/7, identifying top engaging tweets from trusted sources.",
       iconBg: "bg-blue-500"
     },
     {
-      icon: Cpu,
+      icon: Bot,
       title: "Smart Curation",
-      description: "Advanced AI summarizes and refines content, removing noise and focusing on actionable insights.",
+      description: "Advanced AI summarizes and refines content, focusing on actionable insights.",
       iconBg: "bg-purple-500"
     },
     {
-      icon: Mail,
+      icon: MailCheck,
       title: "Delivered to You",
-      description: "Receive perfectly formatted newsletters at 8 AM, 1 PM, and 6 PM UTC—never miss important crypto news.",
+      description: "Receive perfectly formatted newsletters at 8 AM, 1 PM, and 6 PM UTC, with key crypto news.",
       iconBg: "bg-teal-500"
     }
   ];
@@ -51,7 +51,7 @@ const HowItWorks = () => {
                   <div className="hidden md:block absolute top-16 left-full w-8 h-0.5 bg-gradient-to-r from-accent to-transparent z-0"></div>
                 )}
                 
-                <div className="relative backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-8 shadow-glass hover:shadow-glow transition-all duration-500 hover:scale-102 text-center">
+                <div className="relative backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-8 shadow-glass transition-all duration-500 hover:scale-102 text-center min-h-[200px]">
                   {/* Step number */}
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-accent text-dark-gray rounded-full flex items-center justify-center font-bold text-sm">
                     {index + 1}

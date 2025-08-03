@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, Users, Loader2 } from 'lucide-react';
+import NewsletterPreviewCard from './NewsletterPreviewCard';
 
 interface HeroSectionProps {
   setCustomerEmail: (email: string) => void;
@@ -67,7 +68,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
             {/* Subscription Form */}
             <div className="mb-6">
               {!isSubmitted ? (
-                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-md mx-auto lg:mx-0">
+                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-lg mx-auto lg:mx-0">
                   <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
                     <div className="relative flex-1">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -83,7 +84,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
                     </div>
                     <Button 
                       type="submit"
-                      className="h-12 px-8 bg-secondary hover:bg-secondary/90 text-white font-inter font-semibold rounded-xl shadow-elevation hover:shadow-glow transition-all duration-300"
+                      className="h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
                       disabled={isLoading}
                     >
                       {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
@@ -117,33 +118,29 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
           
           {/* Right Column - Newsletter Preview */}
           <div className="md:col-span-2">
-            <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 text-white shadow-glass hover:shadow-glow transition-all duration-500 group">
+            <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 text-white shadow-glass transition-all duration-500 group">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-semibold">📧 Newsletter Preview</h4>
-                  <div className="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                 </div>
                 
                 <div className="space-y-3 text-sm">
-                  <div className="bg-white/10 rounded-lg p-3 group-hover:bg-white/15 transition-colors">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 bg-gradient-text rounded-full flex items-center justify-center text-xs">🔥</div>
-                      <span className="font-medium">Top Tweet Alert</span>
-                    </div>
-                    <p className="text-gray-300 text-xs">Bitcoin breaks $45K resistance level with unprecedented trading volume...</p>
-                  </div>
-                  
-                  <div className="bg-white/10 rounded-lg p-3 group-hover:bg-white/15 transition-colors">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 bg-gradient-text rounded-full flex items-center justify-center text-xs">📊</div>
-                      <span className="font-medium">Market Analysis</span>
-                    </div>
-                    <p className="text-gray-300 text-xs">AI-curated insights from top crypto analysts and market makers...</p>
-                  </div>
-                  
-                  <div className="text-center pt-2">
-                    <span className="text-xs text-gray-400">+ 18 more insights delivered daily</span>
-                  </div>
+                  <NewsletterPreviewCard
+                    emoji="🔥"
+                    title="Top Tweet Alert"
+                    description="Bitcoin breaks $45K resistance level with unprecedented trading volume..."
+                  />
+                  <NewsletterPreviewCard
+                    emoji="📊"
+                    title="Market Analysis"
+                    description="AI-curated insights from top crypto analysts and market makers..."
+                  />
+                  <NewsletterPreviewCard
+                    emoji="💡"
+                    title="Altcoin Spotlight"
+                    description="Discover the next big altcoin with our in-depth analysis and price predictions."
+                  />
                 </div>
               </div>
             </div>

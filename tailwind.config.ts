@@ -74,6 +74,17 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)',
+				'gradient-text': 'var(--gradient-text)',
+				'gradient-glow': 'var(--gradient-glow)',
+			},
+			boxShadow: {
+				'glow': 'var(--shadow-glow)',
+				'elevation': 'var(--shadow-elevation)',
+				'glass': 'var(--glass-shadow)',
+			},
+			backdropBlur: {
+				'glass': '10px',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

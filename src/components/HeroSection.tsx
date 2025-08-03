@@ -3,7 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, Users, Loader2 } from 'lucide-react';
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  setCustomerEmail: (email: string) => void;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -36,14 +40,23 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12">
-      <div className="container mx-auto max-w-7xl">
+    <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-glow rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-glow rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto max-w-7xl relative z-10">
         <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-center">
           {/* Left Column - Content (60%) */}
           <div className="md:col-span-3 text-center md:text-left">
             {/* Main Headline */}
             <h1 className="font-montserrat font-bold text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6">
-              Stop Wasting Time on Crypto News
+              Stop Wasting Time on{' '}
+              <span className="bg-gradient-text bg-clip-text text-transparent">
+                Crypto News
+              </span>
             </h1>
             
             {/* Subheading */}
@@ -54,31 +67,35 @@ const HeroSection: React.FC = () => {
             {/* Subscription Form */}
             <div className="mb-6">
               {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0">
-                  <div className="relative flex-1">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                    <Input
-                      type="email"
-                      placeholder="Enter your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className={`pl-10 h-12 bg-white/95 border-0 focus:bg-white text-primary placeholder:text-gray-500 font-inter ${error ? 'border-2 border-red-500' : ''}`}
-                    />
-                    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-                  </div>
-                  <Button 
-                    type="submit"
-                    className="h-12 px-8 bg-secondary hover:bg-secondary/90 text-white font-inter font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
-                  </Button>
-                </form>
+                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-md mx-auto lg:mx-0">
+                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+                    <div className="relative flex-1">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        type="email"
+                        placeholder="Enter your email address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className={`pl-10 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
+                      />
+                      {error && <p className="text-red-300 text-sm mt-1">{error}</p>}
+                    </div>
+                    <Button 
+                      type="submit"
+                      className="h-12 px-8 bg-secondary hover:bg-secondary/90 text-white font-inter font-semibold rounded-xl shadow-elevation hover:shadow-glow transition-all duration-300"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
+                    </Button>
+                  </form>
+                </div>
               ) : (
-                <div className="flex items-center justify-center lg:justify-start gap-3 p-4 bg-green-500/20 rounded-lg backdrop-blur-sm max-w-md mx-auto lg:mx-0">
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                  <span className="text-white font-inter">Thank you! Check your email for confirmation.</span>
+                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-md mx-auto lg:mx-0">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="text-white font-inter">Thank you! Check your email for confirmation.</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -87,27 +104,47 @@ const HeroSection: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-center lg:justify-start gap-2 text-light-gray">
                 <Users className="h-4 w-4 text-secondary" />
-                <span className="font-inter font-medium">Join 1,000+ crypto enthusiasts</span>
+                <span className="font-inter font-medium flex items-center gap-2">
+                  <span className="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                  Join 1,000+ crypto enthusiasts
+                </span>
               </div>
-              <p className="text-sm text-white/70 font-inter">
+              <p className="text-sm text-white/70 font-inter opacity-80">
                 3 emails daily • Unsubscribe anytime
               </p>
             </div>
           </div>
           
-          {/* Right Column - Illustration Placeholder (40%) */}
+          {/* Right Column - Newsletter Preview */}
           <div className="md:col-span-2">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl aspect-[4/3] flex items-center justify-center border border-white/20" role="img" aria-label="A preview of the newsletter, showing a clean and professional design.">
-              <div className="text-center p-8">
-                <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="h-8 w-8 text-secondary" />
+            <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 text-white shadow-glass hover:shadow-glow transition-all duration-500 group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-lg font-semibold">📧 Newsletter Preview</h4>
+                  <div className="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
                 </div>
-                <h4 className="text-white font-montserrat font-bold text-lg mb-2">
-                  Newsletter Preview
-                </h4>
-                <p className="text-white/70 font-inter text-sm">
-                  Professional insights delivered to your inbox
-                </p>
+                
+                <div className="space-y-3 text-sm">
+                  <div className="bg-white/10 rounded-lg p-3 group-hover:bg-white/15 transition-colors">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 bg-gradient-text rounded-full flex items-center justify-center text-xs">🔥</div>
+                      <span className="font-medium">Top Tweet Alert</span>
+                    </div>
+                    <p className="text-gray-300 text-xs">Bitcoin breaks $45K resistance level with unprecedented trading volume...</p>
+                  </div>
+                  
+                  <div className="bg-white/10 rounded-lg p-3 group-hover:bg-white/15 transition-colors">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 bg-gradient-text rounded-full flex items-center justify-center text-xs">📊</div>
+                      <span className="font-medium">Market Analysis</span>
+                    </div>
+                    <p className="text-gray-300 text-xs">AI-curated insights from top crypto analysts and market makers...</p>
+                  </div>
+                  
+                  <div className="text-center pt-2">
+                    <span className="text-xs text-gray-400">+ 18 more insights delivered daily</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

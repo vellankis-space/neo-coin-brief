@@ -48,38 +48,46 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-20 bg-light-gray">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-16">
+    <motion.section 
+      className="py-20 bg-muted/30 relative overflow-hidden"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/3 left-1/6 w-40 h-40 bg-gradient-glow rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-1/6 w-32 h-32 bg-gradient-glow rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative">
+        <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-4">
           Why Choose Our Newsletter?
         </h2>
+        <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+          Experience the future of crypto news consumption with AI-powered curation
+        </p>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
           variants={containerVariants}
-          initial="hidden"
-          animate="visible"
         >
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <motion.div key={index} variants={itemVariants}>
-                <Card 
-                  className="p-6 h-full hover:scale-102 hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
+                <Card className="backdrop-blur-glass bg-glass-bg border-glass-border p-6 h-full shadow-glass hover:shadow-glow transition-all duration-500 hover:scale-102 group cursor-pointer">
                   <CardContent className="p-0">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0">
-                        <IconComponent className="w-12 h-12 text-accent" title={feature.title} />
+                    <div className="flex flex-col items-center text-center">
+                      <div className="p-4 bg-gradient-card rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-12 h-12 text-accent" />
                       </div>
-                      <div>
-                        <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3">
-                          {feature.title}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                          {feature.description}
-                        </p>
-                      </div>
+                      <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3 group-hover:bg-gradient-text group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {feature.description}
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
@@ -88,7 +96,7 @@ const Features = () => {
           })}
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

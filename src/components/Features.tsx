@@ -70,7 +70,7 @@ const Features = () => {
                   <CardContent className="p-0">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
-                        <IconComponent className="w-12 h-12 text-accent" />
+                        <IconComponent className="w-12 h-12 text-accent" title={feature.title} />
                       </div>
                       <div>
                         <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3">

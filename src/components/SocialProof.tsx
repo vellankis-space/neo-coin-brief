@@ -18,7 +18,7 @@ const SocialProof = () => {
             </p>
             <p className="mt-1 text-sm text-gray-500">Growing daily</p>
           </div>
-          <Card>
+          <Card className="hover:shadow-lg transition-shadow duration-300">
             <CardContent className="p-6">
               <p className="italic text-gray-600">
                 "Finally, crypto news that doesn't waste my time. The AI
@@ -31,7 +31,7 @@ const SocialProof = () => {
               </p>
             </CardFooter>
           </Card>
-          <Card>
+          <Card className="hover:shadow-lg transition-shadow duration-300">
             <CardContent className="p-6">
               <p className="italic text-gray-600">
                 "Three emails a day is perfect. I stay informed without
@@ -46,7 +46,7 @@ const SocialProof = () => {
           </Card>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            <Card>
+            <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                 <p className="italic text-gray-600">
                     "The quality is incredible. No more sifting through crypto

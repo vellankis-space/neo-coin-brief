@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // TODO: Integrate with Stripe and email service
+    setCustomerEmail(email);
     console.log('Email submitted:', email);
 
     setIsLoading(false);

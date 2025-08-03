@@ -134,14 +134,15 @@ All colors MUST be HSL.
   /* Crypto ticker marquee animation */
   @keyframes crypto-scroll {
     0% {
-      transform: translateX(100%);
+      transform: translateX(0%);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
   }
 
   .crypto-marquee {
-    animation: crypto-scroll 60s linear infinite;
+    animation: crypto-scroll 30s linear infinite;
+    width: 200%; /* Double the width to accommodate duplicated content */
   }
 }

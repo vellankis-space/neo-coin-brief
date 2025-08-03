@@ -2,7 +2,7 @@
 // TODO: Integrate with CoinMarketCap API for live data
 // Current implementation uses mock data with realistic prices
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface CryptoData {
   symbol: string;
@@ -24,7 +24,7 @@ const mockCryptoData: CryptoData[] = [
   { symbol: 'UNI', price: 6.78, change24h: -1.89 },
 ];
 
-const TickerContent: React.FC = () => {
+const TickerContent: React.FC<{ data: CryptoData[] }> = ({ data }) => {
   const formatPrice = (price: number): string => {
     if (price < 1) {
       return `${price.toFixed(3)}`;
@@ -49,7 +49,7 @@ const TickerContent: React.FC = () => {
 
   return (
     <>
-      {mockCryptoData.map((crypto, index) => (
+      {data.map((crypto, index) => (
         <div key={`${crypto.symbol}-${index}`} className="flex-shrink-0 flex items-center gap-2 text-sm font-medium px-4">
           <span className="font-semibold">{crypto.symbol}</span>
           <span className="text-gray-300">|</span>
@@ -64,15 +64,19 @@ const TickerContent: React.FC = () => {
 };
 
 const CryptoTicker: React.FC = () => {
+  const [cryptoData] = useState<CryptoData[]>(mockCryptoData);
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-white h-12 overflow-hidden">
       <div className="crypto-marquee flex items-center h-full">
-        <div className="flex-shrink-0 flex items-center">
-          <TickerContent />
-        </div>
-        <div className="flex-shrink-0 flex items-center" aria-hidden="true">
-          <TickerContent />
-        </div>
+        <>
+            <div className="flex-shrink-0 flex items-center">
+              <TickerContent data={cryptoData} />
+            </div>
+            <div className="flex-shrink-0 flex items-center" aria-hidden="true">
+              <TickerContent data={cryptoData} />
+            </div>
+          </>
       </div>
     </div>
   );

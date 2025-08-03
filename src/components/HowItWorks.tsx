@@ -35,7 +35,7 @@ const HowItWorks = () => {
                 className="text-center p-8 rounded-lg bg-card border shadow-sm hover:shadow-md transition-all duration-300 hover:scale-102"
               >
                 <div className="flex justify-center mb-6">
-                  <IconComponent className="w-12 h-12 text-accent" />
+                  <IconComponent className="w-12 h-12 text-accent" title={step.title} />
                 </div>
                 <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-4">
                   {step.title}

@@ -1,5 +1,27 @@
+import { motion } from 'framer-motion';
 import { Zap, Clock, Brain, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const Features = () => {
   const features = [
@@ -32,33 +54,39 @@ const Features = () => {
           Why Choose Our Newsletter?
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <Card 
-                key={index}
-                className="p-6 hover:scale-102 hover:shadow-lg transition-all duration-300 cursor-pointer"
-              >
-                <CardContent className="p-0">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <IconComponent className="w-12 h-12 text-accent" />
+              <motion.div key={index} variants={itemVariants}>
+                <Card 
+                  className="p-6 h-full hover:scale-102 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                >
+                  <CardContent className="p-0">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <IconComponent className="w-12 h-12 text-accent" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3">
+                          {feature.title}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3">
-                        {feature.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

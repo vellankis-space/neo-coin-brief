@@ -24,16 +24,16 @@ const mockCryptoData: CryptoData[] = [
   { symbol: 'UNI', price: 6.78, change24h: -1.89 },
 ];
 
-const CryptoTicker: React.FC = () => {
+const TickerContent: React.FC = () => {
   const formatPrice = (price: number): string => {
     if (price < 1) {
-      return `$${price.toFixed(3)}`;
+      return `${price.toFixed(3)}`;
     } else if (price < 100) {
-      return `$${price.toFixed(2)}`;
+      return `${price.toFixed(2)}`;
     } else {
-      return `$${price.toLocaleString('en-US', { 
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2 
+      return `${price.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       })}`;
     }
   };
@@ -47,23 +47,31 @@ const CryptoTicker: React.FC = () => {
     return change >= 0 ? 'text-crypto-positive' : 'text-crypto-negative';
   };
 
-  // Duplicate the data for seamless infinite scroll
-  const duplicatedData = [...mockCryptoData, ...mockCryptoData];
+  return (
+    <>
+      {mockCryptoData.map((crypto, index) => (
+        <div key={`${crypto.symbol}-${index}`} className="flex-shrink-0 flex items-center gap-2 text-sm font-medium px-4">
+          <span className="font-semibold">{crypto.symbol}</span>
+          <span className="text-gray-300">|</span>
+          <span>{formatPrice(crypto.price)}</span>
+          <span className={`${getChangeColor(crypto.change24h)} font-semibold`}>
+            {formatChange(crypto.change24h)}
+          </span>
+        </div>
+      ))}
+    </>
+  );
+};
 
+const CryptoTicker: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-white h-12 overflow-hidden">
-      <div className="flex items-center h-full">
-        <div className="crypto-marquee flex items-center gap-8 whitespace-nowrap">
-          {duplicatedData.map((crypto, index) => (
-            <div key={`${crypto.symbol}-${index}`} className="flex items-center gap-2 text-sm font-medium">
-              <span className="font-semibold">{crypto.symbol}</span>
-              <span className="text-gray-300">|</span>
-              <span>{formatPrice(crypto.price)}</span>
-              <span className={`${getChangeColor(crypto.change24h)} font-semibold`}>
-                {formatChange(crypto.change24h)}
-              </span>
-            </div>
-          ))}
+      <div className="crypto-marquee flex items-center h-full">
+        <div className="flex-shrink-0 flex items-center">
+          <TickerContent />
+        </div>
+        <div className="flex-shrink-0 flex items-center" aria-hidden="true">
+          <TickerContent />
         </div>
       </div>
     </div>

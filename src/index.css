@@ -108,8 +108,17 @@ All colors MUST be HSL.
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem; /* 48px, the height of the ticker */
+  }
   * {
     @apply border-border;
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--secondary));
+    outline-offset: 2px;
   }
 
   body {

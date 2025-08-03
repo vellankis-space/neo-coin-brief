@@ -1,36 +1,55 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Mail, CheckCircle, Users } from 'lucide-react';
+import { Mail, CheckCircle, Users, Loader2 } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // TODO: Integrate with Stripe and email service
-      setIsSubmitted(true);
-      console.log('Email submitted:', email);
+    setError('');
+
+    if (!email) {
+      setError('Email address is required.');
+      return;
     }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // TODO: Integrate with Stripe and email service
+    console.log('Email submitted:', email);
+
+    setIsLoading(false);
+    setIsSubmitted(true);
   };
 
   return (
     <section className="min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12">
       <div className="container mx-auto max-w-7xl">
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+        <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-center">
           {/* Left Column - Content (60%) */}
-          <div className="lg:col-span-3 text-center lg:text-left">
+          <div className="md:col-span-3 text-center md:text-left">
             {/* Main Headline */}
             <h1 className="font-montserrat font-bold text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6">
               Stop Wasting Time on Crypto News
             </h1>
             
             {/* Subheading */}
-            <h3 className="font-inter text-light-gray text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+            <h2 className="font-inter text-light-gray text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
               Get the top 20 crypto insights delivered straight to your inbox—three times a day—so you stay informed without burning the midnight oil.
-            </h3>
+            </h2>
             
             {/* Subscription Form */}
             <div className="mb-6">
@@ -44,19 +63,21 @@ const HeroSection: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="pl-10 h-12 bg-white/95 border-0 focus:bg-white text-primary placeholder:text-gray-500 font-inter"
+                      className={`pl-10 h-12 bg-white/95 border-0 focus:bg-white text-primary placeholder:text-gray-500 font-inter ${error ? 'border-2 border-red-500' : ''}`}
                     />
+                    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                   </div>
                   <Button 
                     type="submit"
                     className="h-12 px-8 bg-secondary hover:bg-secondary/90 text-white font-inter font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
+                    disabled={isLoading}
                   >
-                    Subscribe Now
+                    {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
                   </Button>
                 </form>
               ) : (
-                <div className="flex items-center justify-center lg:justify-start gap-3 p-4 bg-white/10 rounded-lg backdrop-blur-sm max-w-md mx-auto lg:mx-0">
-                  <CheckCircle className="h-5 w-5 text-secondary" />
+                <div className="flex items-center justify-center lg:justify-start gap-3 p-4 bg-green-500/20 rounded-lg backdrop-blur-sm max-w-md mx-auto lg:mx-0">
+                  <CheckCircle className="h-5 w-5 text-green-400" />
                   <span className="text-white font-inter">Thank you! Check your email for confirmation.</span>
                 </div>
               )}
@@ -75,8 +96,8 @@ const HeroSection: React.FC = () => {
           </div>
           
           {/* Right Column - Illustration Placeholder (40%) */}
-          <div className="lg:col-span-2">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl aspect-[4/3] flex items-center justify-center border border-white/20">
+          <div className="md:col-span-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl aspect-[4/3] flex items-center justify-center border border-white/20" role="img" aria-label="A preview of the newsletter, showing a clean and professional design.">
               <div className="text-center p-8">
                 <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Mail className="h-8 w-8 text-secondary" />

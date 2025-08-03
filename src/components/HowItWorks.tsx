@@ -5,17 +5,20 @@ const HowItWorks = () => {
     {
       icon: Search,
       title: "AI Scrapes Twitter",
-      description: "Our AI monitors crypto Twitter 24/7, identifying the top 20 most engaging tweets from trusted sources."
+      description: "Our AI monitors crypto Twitter 24/7, identifying the top 20 most engaging tweets from trusted sources.",
+      iconBg: "bg-blue-500"
     },
     {
       icon: Cpu,
       title: "Smart Curation",
-      description: "Advanced AI summarizes and refines content, removing noise and focusing on actionable insights."
+      description: "Advanced AI summarizes and refines content, removing noise and focusing on actionable insights.",
+      iconBg: "bg-purple-500"
     },
     {
       icon: Mail,
       title: "Delivered to You",
-      description: "Receive perfectly formatted newsletters at 8 AM, 1 PM, and 6 PM UTC—never miss important crypto news."
+      description: "Receive perfectly formatted newsletters at 8 AM, 1 PM, and 6 PM UTC—never miss important crypto news.",
+      iconBg: "bg-teal-500"
     }
   ];
 
@@ -55,8 +58,8 @@ const HowItWorks = () => {
                   </div>
                   
                   <div className="flex justify-center mb-6 pt-4">
-                    <div className="p-4 bg-gradient-card rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                      <IconComponent className="w-12 h-12 text-accent" />
+                    <div className={`w-16 h-16 ${step.iconBg} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <IconComponent className="w-8 h-8 text-white" />
                     </div>
                   </div>
                   

@@ -41,7 +41,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-8 pb-12 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-4 pb-12 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-glow rounded-full blur-3xl"></div>
@@ -72,10 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
                     <CheckCircle className="h-5 w-5 text-green-400" />
                     <span className="text-white font-inter text-sm sm:text-base">Top 1% insights from 50K+ daily Twitter posts</span>
                 </div>
-                <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter text-sm sm:text-base">Perfect timing — 8 AM, 1 PM, 6 PM UTC</span>
-                </div>
+                
                 <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
                     <span className="text-white font-inter text-sm sm:text-base">Join 1,247+ traders getting Twitter's best signals</span>

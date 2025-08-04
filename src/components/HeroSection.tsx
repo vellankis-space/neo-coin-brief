@@ -54,7 +54,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
           <div className="md:col-span-3 text-center md:text-left">
             {/* Main Headline */}
             <h1 className="font-montserrat font-bold text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6">
-              Never Miss Another <span className="bg-gradient-bitcoin bg-clip-text text-transparent relative">Crypto Opportunit<span className="relative">y<Twitter className="absolute -right-4 -top-0 w-6 h-6 sm:w-8 sm:h-8 text-blue-400 animate-pulse" /></span></span>
+              Never Miss Another <span className="bg-gradient-bitcoin bg-clip-text text-transparent relative">Crypto Opportunity<Twitter className="inline-block ml-2 w-6 h-6 sm:w-8 sm:h-8 text-blue-400 animate-pulse" /></span>
             </h1>
             
             {/* Subheading */}

@@ -1,8 +1,24 @@
 import axios from 'axios';
 
+const retry = async (fn, retries = 3, delay = 1000) => {
+  try {
+    return await fn();
+  } catch (error) {
+    if (retries > 0 && (error.response?.status === 429 || error.code === 'ERR_BAD_REQUEST')) {
+      console.warn(`Retrying after ${delay}ms... Attempts left: ${retries}`);
+      await new Promise(res => setTimeout(res, delay));
+      return retry(fn, retries - 1, delay * 2);
+    }
+    throw error;
+  }
+};
+
 export default async function handler(req, res) {
   try {
-    const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+    const response = await retry(async () => {
+      return await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+    });
+
     const top10ByVolume = response.data.map(coin => ({
       symbol: coin.symbol.toUpperCase() + '/USD',
       price: coin.current_price.toFixed(2),

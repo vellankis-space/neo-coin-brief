@@ -71,7 +71,7 @@ const CryptoTicker: React.FC = () => {
 
     fetchCryptoPrices();
 
-    const intervalId = setInterval(fetchCryptoPrices, 5000);
+    const intervalId = setInterval(fetchCryptoPrices, 60000);
 
     return () => clearInterval(intervalId);
   }, []);

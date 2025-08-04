@@ -182,6 +182,25 @@ All colors MUST be HSL.
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 3rem; /* 48px, the height of the ticker */
+    font-size: 16px; /* Base font size for larger screens */
+  }
+
+  @media (max-width: 1024px) {
+    html {
+      font-size: 15px; /* Slightly smaller base font size for tablets */
+    }
+  }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px; /* Even smaller base font size for mobile devices */
+    }
+  }
+
+  @media (max-width: 480px) {
+    html {
+      font-size: 13px; /* Smallest base font size for small mobile devices */
+    }
   }
   * {
     @apply border-border;

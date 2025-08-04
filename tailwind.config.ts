@@ -72,6 +72,9 @@ export default {
 				'light-gray': 'hsl(var(--light-gray))',
 				'crypto-positive': 'hsl(var(--crypto-positive))',
 				'crypto-negative': 'hsl(var(--crypto-negative))',
+				'bitcoin-orange': 'hsl(var(--bitcoin-orange))',
+				'ethereum-blue': 'hsl(var(--ethereum-blue))',
+				'crypto-gold': 'hsl(var(--crypto-gold))',
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
@@ -79,11 +82,15 @@ export default {
 				'gradient-text': 'var(--gradient-text)',
 				'gradient-bitcoin': 'var(--gradient-bitcoin)',
 				'gradient-glow': 'var(--gradient-glow)',
+				'gradient-crypto': 'var(--gradient-crypto)',
+				'gradient-crypto-text': 'var(--gradient-crypto-text)',
+				'gradient-main': 'var(--gradient-hero)',
 			},
 			boxShadow: {
 				'glow': 'var(--shadow-glow)',
 				'elevation': 'var(--shadow-elevation)',
 				'glass': 'var(--glass-shadow)',
+				'crypto': 'var(--shadow-crypto)',
 			},
 			backdropBlur: {
 				'glass': '10px',
@@ -92,6 +99,9 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			borderColor: {
+				'crypto-glow': 'hsla(var(--crypto-positive), 0.3)',
 			},
 			keyframes: {
 				'accordion-down': {

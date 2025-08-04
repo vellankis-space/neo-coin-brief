@@ -1,5 +1,5 @@
 
-import { Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Twitter, Linkedin, Facebook } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -15,10 +15,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold">Links</h4>
             <div className="mt-4 flex flex-col space-y-2">
-              <a href="#" className="text-gray-400 hover:text-white">About</a>
-              <a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-white">Terms</a>
-              <a href="#" className="text-gray-400 hover:text-white">Contact</a>
+              <a href="/about" className="text-gray-400 hover:text-white">About</a>
+              <a href="/privacy" className="text-gray-400 hover:text-white">Privacy Policy</a>
+              <a href="/terms" className="text-gray-400 hover:text-white">Terms</a>
+              <a href="/contact" className="text-gray-400 hover:text-white">Contact</a>
             </div>
           </div>
           <div>
@@ -26,7 +26,7 @@ const Footer = () => {
             <div className="mt-4 flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white"><Twitter /></a>
               <a href="#" className="text-gray-400 hover:text-white"><Linkedin /></a>
-              <a href="#" className="text-gray-400 hover:text-white"><Youtube /></a>
+              <a href="#" className="text-gray-400 hover:text-white"><Facebook /></a>
             </div>
           </div>
         </div>

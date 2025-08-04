@@ -6,7 +6,7 @@ import Features from '@/components/Features';
 import Pricing from '@/components/Pricing';
 import SocialProof from '@/components/SocialProof';
 import Faq from '@/components/Faq';
-import ExitIntentPopup from '@/components/ExitIntentPopup';
+import CryptoPopup from '@/components/CryptoPopup';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
@@ -49,8 +49,8 @@ const Index = () => {
       {/* Footer */}
       <Footer />
 
-      {/* Exit Intent Popup */}
-      <ExitIntentPopup />
+      {/* Crypto Popup */}
+      <CryptoPopup />
     </div>
   );
 };

@@ -118,6 +118,63 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Crypto-specific design tokens */
+    --dark-gray: 220 13% 18%;
+    --light-gray: 220 13% 91%;
+    --crypto-positive: 142 71% 45%;
+    --crypto-negative: 0 84% 60%;
+    
+    /* Enhanced crypto theme colors */
+    --bitcoin-orange: 30 100% 50%;
+    --ethereum-blue: 225 100% 60%;
+    --crypto-gold: 45 100% 51%;
+    
+    /* Enhanced gradients for modern crypto feel */
+    --gradient-hero: linear-gradient(135deg, 
+      hsl(var(--primary)) 0%, 
+      hsl(220 83% 53%) 25%,
+      hsl(260 83% 53%) 50%,
+      hsl(280 83% 53%) 75%,
+      hsl(var(--primary)) 100%);
+    
+    --gradient-card: linear-gradient(135deg, 
+      hsla(var(--background), 0.1) 0%, 
+      hsla(var(--background), 0.05) 100%);
+      
+    --gradient-text: linear-gradient(135deg, 
+      hsl(var(--primary)) 0%, 
+      hsl(280 83% 53%) 50%,
+      hsl(var(--accent)) 100%);
+      
+    --gradient-bitcoin: linear-gradient(135deg, 
+      hsl(30 100% 50%) 0%, 
+      hsl(45 100% 51%) 100%);
+      
+    --gradient-glow: radial-gradient(circle at center, 
+      hsla(var(--primary), 0.3) 0%, 
+      transparent 70%);
+      
+    /* New crypto-themed gradients */
+    --gradient-crypto: linear-gradient(135deg, 
+      hsl(var(--bitcoin-orange)) 0%, 
+      hsl(var(--crypto-positive)) 50%,
+      hsl(var(--ethereum-blue)) 100%);
+      
+    --gradient-crypto-text: linear-gradient(135deg, 
+      hsl(var(--bitcoin-orange)) 0%, 
+      hsl(var(--crypto-gold)) 50%,
+      hsl(var(--crypto-positive)) 100%);
+    
+    /* Enhanced shadow system */
+    --shadow-glow: 0 0 30px hsla(var(--primary), 0.4);
+    --shadow-elevation: 0 10px 30px -10px hsla(var(--foreground), 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-crypto: 0 10px 40px -10px hsla(var(--crypto-positive), 0.4);
+    
+    /* Glass morphism utilities */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
   }
 }
 

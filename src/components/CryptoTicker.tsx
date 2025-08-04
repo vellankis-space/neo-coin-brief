@@ -39,7 +39,7 @@ const TickerContent: React.FC<{ data: CryptoData[] }> = ({ data }) => {
   return (
     <>
       {data.map((crypto, index) => (
-        <div key={`${crypto.symbol}-${index}`} className="flex-shrink-0 flex items-center gap-2 text-sm font-medium px-4">
+        <div key={`${crypto.symbol}-${index}`} className="flex-shrink-0 flex items-center gap-2 text-xs sm:text-sm font-medium px-2 sm:px-4">
           <span className="font-semibold">{crypto.symbol}</span>
           <span className="text-gray-600">|</span>
           <span>{formatPrice(crypto.price)}</span>
@@ -77,7 +77,7 @@ const CryptoTicker: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-12 overflow-hidden backdrop-blur-md bg-white/30 border-b border-white/10 text-gray-800">
+    <div className="fixed top-0 left-0 right-0 z-50 h-10 sm:h-12 overflow-hidden backdrop-blur-md bg-white/30 border-b border-white/10 text-gray-800">
       <div className="crypto-marquee flex items-center h-full">
         <>
             <div className="flex-shrink-0 flex items-center">

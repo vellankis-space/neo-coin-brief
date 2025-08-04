@@ -17,7 +17,7 @@ const CryptoPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-gradient-crypto border-crypto-glow backdrop-blur-xl max-w-md mx-auto">
+      <DialogContent className="bg-gradient-crypto border-crypto-glow backdrop-blur-xl max-w-sm md:max-w-md mx-auto p-4 sm:p-6">
         <button 
           onClick={() => setIsOpen(false)}
           className="absolute right-4 top-4 text-white/70 hover:text-white transition-colors z-10"

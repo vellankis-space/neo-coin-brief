@@ -56,7 +56,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gradient-main">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
         <Link to="/">
           <Button variant="ghost" className="mb-8 text-white hover:bg-white/10">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -66,7 +66,7 @@ const Contact = () => {
 
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-5xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-4 sm:mb-6">
               Get in Touch
             </h1>
             <p className="text-xl text-white/80 leading-relaxed max-w-2xl mx-auto">
@@ -75,7 +75,7 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Form */}
             <Card className="bg-glass border-crypto-glow backdrop-blur-xl">
               <CardContent className="p-8">

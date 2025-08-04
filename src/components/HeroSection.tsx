@@ -53,12 +53,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
           {/* Left Column - Content (60%) */}
           <div className="md:col-span-3 text-center md:text-left">
             {/* Main Headline */}
-            <h1 className="font-montserrat font-bold text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6">
+            <h1 className="font-montserrat font-bold text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6">
               Never Miss Another <span className="bg-gradient-bitcoin bg-clip-text text-transparent relative">Crypto Opportunit<span className="relative">y<Twitter className="absolute -right-4 -top-0 w-6 h-6 sm:w-8 sm:h-8 text-blue-400 animate-pulse" /></span></span>
             </h1>
             
             {/* Subheading */}
-            <h2 className="font-inter text-light-gray text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+            <h2 className="font-inter text-light-gray text-base sm:text-lg lg:text-xl leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
               <span className="bg-gradient-bitcoin bg-clip-text text-transparent">AI</span> scans Twitter 24/7 to deliver the hottest crypto insights 3x daily — straight from the source.
             </h2>
             
@@ -66,35 +66,35 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
             <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter">Live Twitter monitoring of crypto influencers & whales</span>
+                    <span className="text-white font-inter text-sm sm:text-base">Live Twitter monitoring of crypto influencers & whales</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter">Top 1% insights from 50K+ daily Twitter posts</span>
+                    <span className="text-white font-inter text-sm sm:text-base">Top 1% insights from 50K+ daily Twitter posts</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter">Perfect timing — 8 AM, 1 PM, 6 PM UTC</span>
+                    <span className="text-white font-inter text-sm sm:text-base">Perfect timing — 8 AM, 1 PM, 6 PM UTC</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter">Join 1,247+ traders getting Twitter's best signals</span>
+                    <span className="text-white font-inter text-sm sm:text-base">Join 1,247+ traders getting Twitter's best signals</span>
                 </div>
             </div>
 
             {/* Email Signup Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center">
                 <Input
                     type="email"
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className={`pl-4 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
+                    className={`w-full sm:w-auto flex-grow pl-4 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
                 />
                 <Button 
                   type="submit"
-                  className="h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
+                  className="w-full sm:w-auto h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
                   disabled={isLoading}
                 >
                   {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}

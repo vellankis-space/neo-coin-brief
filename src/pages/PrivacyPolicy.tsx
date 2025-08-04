@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-gradient-main">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
         <Link to="/">
           <Button variant="ghost" className="mb-8 text-white hover:bg-white/10">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -14,13 +14,13 @@ const PrivacyPolicy = () => {
         </Link>
 
         <div className="max-w-4xl mx-auto bg-glass border-crypto-glow backdrop-blur-xl rounded-2xl p-8">
-          <h1 className="text-4xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-6 sm:mb-8">
             Privacy Policy
           </h1>
           
-          <div className="space-y-8 text-white/80">
+          <div className="space-y-6 sm:space-y-8 text-white/80">
             <section>
-              <h2 className="text-2xl font-semibold text-white mb-4">Information We Collect</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Information We Collect</h2>
               <p className="mb-4">
                 We collect information you provide directly to us, such as when you create an account, 
                 subscribe to our newsletter, or contact us for support. This may include:

@@ -23,7 +23,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-20 bg-background relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-background relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 right-1/4 w-32 h-32 bg-gradient-glow rounded-full blur-2xl"></div>
@@ -31,11 +31,11 @@ const HowItWorks = () => {
       </div>
       
       <div className="container mx-auto px-4 relative">
-        <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-4">
+        <h2 className="text-3xl sm:text-4xl font-montserrat font-bold text-center text-foreground mb-4">
           89% Accuracy Rate. Here's How.
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-6xl mx-auto">
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             return (
@@ -48,23 +48,23 @@ const HowItWorks = () => {
                   <div className="hidden md:block absolute top-16 left-full w-8 h-0.5 bg-gradient-to-r from-accent to-transparent z-0"></div>
                 )}
                 
-                <div className="relative backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-8 shadow-glass transition-all duration-500 hover:scale-102 text-center min-h-[200px]">
+                <div className="relative backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 sm:p-8 shadow-glass transition-all duration-500 hover:scale-102 text-center min-h-[200px]">
                   {/* Step number */}
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-accent text-dark-gray rounded-full flex items-center justify-center font-bold text-sm">
                     {index + 1}
                   </div>
                   
-                  <div className="flex justify-center mb-6 pt-4">
-                    <div className={`w-16 h-16 ${step.iconBg} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                      <IconComponent className="w-8 h-8 text-white" />
+                  <div className="flex justify-center mb-4 sm:mb-6 pt-4">
+                    <div className={`w-14 h-14 sm:w-16 sm:h-16 ${step.iconBg} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                     </div>
                   </div>
                   
-                  <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-4 group-hover:text-accent transition-colors">
+                  <h3 className="text-lg sm:text-xl font-montserrat font-semibold text-card-foreground mb-3 sm:mb-4 group-hover:text-accent transition-colors">
                     {step.title}
                   </h3>
                   
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     {step.description}
                   </p>
                 </div>

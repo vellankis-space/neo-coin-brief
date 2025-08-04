@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 const Terms = () => {
   return (
     <div className="min-h-screen bg-gradient-main">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
         <Link to="/">
           <Button variant="ghost" className="mb-8 text-white hover:bg-white/10">
             <ArrowLeft className="w-4 h-4 mr-2" />

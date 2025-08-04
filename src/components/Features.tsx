@@ -53,7 +53,7 @@ const Features = () => {
 
   return (
     <motion.section 
-      className="py-20 bg-muted/30 relative overflow-hidden"
+      className="py-16 sm:py-20 bg-muted/30 relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -65,31 +65,31 @@ const Features = () => {
       </div>
       
       <div className="container mx-auto px-4 relative">
-        <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-4">
+        <h2 className="text-3xl sm:text-4xl font-montserrat font-bold text-center text-foreground mb-4">
           Why 1,247+ Traders Trust Us
         </h2>
-        <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12 sm:mb-16 max-w-2xl mx-auto">
           
         </p>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 max-w-4xl mx-auto"
           variants={containerVariants}
         >
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <motion.div key={index} variants={itemVariants}>
-                <Card className="backdrop-blur-glass bg-glass-bg border-glass-border p-6 h-full shadow-glass transition-all duration-500 hover:scale-102 group cursor-pointer">
+                <Card className="backdrop-blur-glass bg-glass-bg border-glass-border p-6 sm:p-8 h-full shadow-glass transition-all duration-500 hover:scale-102 group cursor-pointer">
                   <CardContent className="p-0">
                     <div className="flex flex-col items-center text-center">
-                      <div className={`w-16 h-16 ${feature.iconBg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                        <IconComponent className="w-8 h-8 text-white" />
+                      <div className={`w-14 h-14 sm:w-16 sm:h-16 ${feature.iconBg} rounded-2xl flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                        <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-montserrat font-semibold text-card-foreground mb-3 transition-all duration-300">
+                      <h3 className="text-lg sm:text-xl font-montserrat font-semibold text-card-foreground mb-3 transition-all duration-300">
                         {feature.title}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
                     </div>

@@ -35,8 +35,8 @@ const CryptoPopup = () => {
           </DialogTitle>
           
           <div className="space-y-2">
-            <p className="text-white/90 text-lg font-medium">
-              Join 2,847+ traders getting alpha signals
+            <p className="text-white/90 text-lg font-medium text-center">
+              Join 1,247+ traders getting alpha signals
             </p>
             <div className="flex items-center justify-center gap-2 text-crypto-positive text-sm">
               <TrendingUp size={16} />
@@ -58,8 +58,7 @@ const CryptoPopup = () => {
           </div>
           
           <div className="flex items-center justify-center gap-4 text-xs text-white/60">
-            <span>✅ Free forever</span>
-            <span>✅ Unsubscribe anytime</span>
+            <span>✅ Cancel anytime</span>
           </div>
         </div>
       </DialogContent>

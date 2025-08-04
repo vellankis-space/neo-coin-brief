@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,21 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  const faqItems = [
+    {
+      question: "How is this different from browsing crypto Twitter?",
+      answer: "A: We filter 50K+ daily posts to the top 20 insights. You skip the noise."
+    },
+    {
+      question: "Why 3 emails daily?",
+      answer: "A: Crypto Twitter never sleeps. We cover Asian, European, and US market sessions."
+    },
+    {
+      question: "Can I trust AI-curated Twitter content?",
+      answer: "A: We curate real tweets from verified Twitter accounts. You get facts, not opinions."
+    }
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,34 +177,16 @@ const Contact = () => {
 
               <div className="bg-glass border-crypto-glow backdrop-blur-xl rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-6">Frequently Asked Questions</h3>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">How often do you send signals?</h4>
-                    <p className="text-white/70 text-sm">
-                      We send 3-5 high-quality signals per week, focusing on the most promising opportunities.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">Can I cancel my subscription anytime?</h4>
-                    <p className="text-white/70 text-sm">
-                      Yes, you can cancel your subscription at any time with no questions asked.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">Do you offer refunds?</h4>
-                    <p className="text-white/70 text-sm">
-                      We offer a 30-day money-back guarantee if you're not satisfied with our service.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-crypto-positive/20 to-emerald-400/20 border border-crypto-positive/30 rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-white mb-3">💡 Pro Tip</h3>
-                <p className="text-white/80 text-sm">
-                  Join our Telegram community for real-time discussions and additional insights from 
-                  fellow traders and our team.
-                </p>
+                 <Accordion type="single" collapsible className="w-full">
+                    {faqItems.map((item, index) => (
+                    <AccordionItem value={`item-${index}`} key={index}>
+                        <AccordionTrigger className="text-lg font-semibold text-white">{item.question}</AccordionTrigger>
+                        <AccordionContent className="text-base text-white/70">
+                        {item.answer}
+                        </AccordionContent>
+                    </AccordionItem>
+                    ))}
+                </Accordion>
               </div>
             </div>
           </div>

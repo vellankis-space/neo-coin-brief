@@ -77,9 +77,7 @@ const Terms = () => {
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Subscriptions are billed automatically on a recurring basis</li>
                 <li>You can cancel your subscription at any time</li>
-                <li>Refunds are provided according to our refund policy</li>
-                <li>Price changes will be communicated 30 days in advance</li>
-                <li>All payments are processed securely through Stripe</li>
+                <li>All payments are processed securely through Razorpay</li>
               </ul>
             </section>
 

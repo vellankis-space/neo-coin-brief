@@ -4,20 +4,20 @@ const HowItWorks = () => {
   const steps = [
     {
       icon: Megaphone,
-      title: "AI Scrapes Twitter",
-      description: "AI monitors crypto Twitter 24/7, identifying top engaging tweets from trusted sources.",
+      title: "Step 1: AI Scrapes Twitter",
+      description: "Monitor 50K+ Daily Twitter Posts AI tracks verified crypto accounts, whale watchers, and influencers 24/7.",
       iconBg: "bg-blue-500"
     },
     {
       icon: Bot,
-      title: "Smart Curation",
-      description: "Advanced AI summarizes and refines content, focusing on actionable insights.",
+      title: "Step 2: Smart Curation",
+      description: "Filter Top 1% Signals Advanced algorithms identify market-moving content, eliminate noise.",
       iconBg: "bg-purple-500"
     },
     {
       icon: MailCheck,
-      title: "Delivered to You",
-      description: "Receive perfectly formatted newsletters at 8 AM, 1 PM, and 6 PM UTC, with key crypto news.",
+      title: "Step 3: Delivered to You",
+      description: "Perfect Timing Clean insights at 8 AM, 1 PM, 6 PM UTC.",
       iconBg: "bg-teal-500"
     }
   ];
@@ -32,11 +32,8 @@ const HowItWorks = () => {
       
       <div className="container mx-auto px-4 relative">
         <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-4">
-          How It Works
+          89% Accuracy Rate. Here's How.
         </h2>
-        <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
-          Our AI-powered system transforms crypto chaos into organized insights
-        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {steps.map((step, index) => {

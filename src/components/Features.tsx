@@ -27,26 +27,26 @@ const Features = () => {
   const features = [
     {
       icon: Rocket,
-      title: "Effortless Efficiency",
-      description: "Stop endless scrolling. Get only what matters—curated crypto insights in minutes, not hours.",
+      title: "Benefit 1: Stop Endless Scrolling",
+      description: "Skip 3+ hours of Twitter noise. Get only insights that move markets.",
       iconBg: "bg-yellow-500"
     },
     {
       icon: Hourglass,
-      title: "Perfect Work-Life Balance",
-      description: "Stay ahead during business hours. Spend your evenings living, not researching crypto trends.",
+      title: "Benefit 2: Never Sleep on Opportunities",
+      description: "AI monitors 24/7 across all time zones. You stay ahead without burnout.",
       iconBg: "bg-orange-500"
     },
     {
       icon: Lightbulb,
-      title: "AI-Powered Intelligence",
-      description: "Our AI filters out noise, FUD, and spam. Only genuine, high-quality insights reach your inbox.",
+      title: "Benefit 3: Beyond Human Speed",
+      description: "AI processes more in 1 hour than you could in a month. Facts, not hype.",
       iconBg: "bg-purple-500"
     },
     {
       icon: ShieldCheck,
-      title: "Curated for Accuracy",
-      description: "Every tweet is fact-checked and refined. No more misleading information or crypto scams.",
+      title: "Benefit 4: Verified Intelligence",
+      description: "Every insight is fact-checked and traceable to original Twitter sources.",
       iconBg: "bg-green-500"
     }
   ];
@@ -66,10 +66,10 @@ const Features = () => {
       
       <div className="container mx-auto px-4 relative">
         <h2 className="text-4xl font-montserrat font-bold text-center text-foreground mb-4">
-          Why Choose Our Newsletter?
+          Why 1,247+ Traders Trust Us
         </h2>
         <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
-          Experience the future of crypto news consumption with AI-powered curation
+          
         </p>
         
         <motion.div 

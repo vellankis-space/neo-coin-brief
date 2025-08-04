@@ -11,7 +11,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
-import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown } from "lucide-react";
+import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown, BadgeCheck } from "lucide-react";
 import { loadStripe } from '@stripe/stripe-js';
 
 interface PricingProps {
@@ -68,13 +68,12 @@ const Pricing: React.FC<PricingProps> = ({ customerEmail }) => {
     <section id="pricing" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800">Simple, Transparent Pricing</h2>
-          <p className="text-lg text-gray-600 mt-2">Join thousands of crypto enthusiasts getting smarter every day</p>
+          <h2 className="text-4xl font-bold text-gray-800">Simple Pricing</h2>
         </div>
         <div className="flex justify-center">
           <Card className="max-w-[90vw] w-full md:max-w-sm bg-white rounded-lg shadow-lg p-8 border-2 border-[#00CFAF] relative hover:shadow-xl hover:scale-[1.01] transition-all duration-300 ease-in-out">
             <Badge className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FFC300] text-white text-sm font-bold px-4 py-1 rounded-full">
-              TO THE MOON!
+              MOST POPULAR
             </Badge>
             <CardHeader className="text-center pt-8">
               <CardTitle className="text-2xl font-bold text-[#1E1E2F]">Pro Newsletter</CardTitle>
@@ -82,69 +81,43 @@ const Pricing: React.FC<PricingProps> = ({ customerEmail }) => {
                 <span className="text-5xl font-bold text-gray-900">$9</span>
                 <span className="text-xl text-gray-500 ml-2">/month</span>
               </div>
-              <p className="text-sm text-[#00CFAF] italic">That's only $0.10 per newsletter!</p>
             </CardHeader>
             <CardContent>
               <ul className="mt-6 space-y-4">
                 <li className="flex items-center">
                   <CircleCheck className="text-green-500 mr-3" />
-                  <span>3 daily newsletters (8 AM, 1 PM, 6 PM UTC)</span>
+                  <span>3 daily newsletters</span>
                 </li>
                 <li className="flex items-center">
                   <CircleCheck className="text-green-500 mr-3" />
-                  <span>Top 20 AI-curated crypto insights</span>
+                  <span>Top 20 AI insights</span>
                 </li>
                 <li className="flex items-center">
                   <CircleCheck className="text-green-500 mr-3" />
-                  <span>Breaking news alerts</span>
+                  <span>Breaking alerts</span>
+                </li>
+                <li className="flex items-center">
+                  <CircleCheck className="text-green-500 mr-3" />
+                  <span>24/7 support</span>
                 </li>
               </ul>
               <Separator className="my-6" />
-              <Collapsible open={isFeaturesOpen} onOpenChange={setIsFeaturesOpen}>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="w-full flex items-center justify-center text-sm font-semibold text-gray-600 hover:text-gray-900">
-                    Show all features
-                    <ChevronDown className={`w-4 h-4 ml-2 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <ul className="mt-4 space-y-4">
-                    <li className="flex items-center">
-                      <CircleCheck className="text-green-500 mr-3" />
-                      <span>Mobile-optimized email format</span>
-                    </li>
-                    <li className="flex items-center">
-                      <CircleCheck className="text-green-500 mr-3" />
-                      <span>Unsubscribe anytime</span>
-                    </li>
-                    <li className="flex items-center">
-                      <CircleCheck className="text-green-500 mr-3" />
-                      <span>No ads or spam</span>
-                    </li>
-                  </ul>
-                </CollapsibleContent>
-              </Collapsible>
-            </CardContent>
-            <CardFooter className="flex flex-col items-center">
               <Button
                 onClick={handleSubscription}
                 className="w-full mt-6 bg-[#00CFAF] text-white rounded-lg py-4 text-lg hover:bg-[#00b89f] hover:scale-102 transition-transform"
               >
-                Start My Subscription
+                Start Subscription
               </Button>
               <div className="text-center mt-4 text-sm text-gray-500">
-                <div className="flex items-center justify-center">
-                  <LockKeyhole className="w-4 h-4 mr-2" />
-                  <span>Secure payment via Stripe</span>
-                </div>
                 <div className="flex items-center justify-center mt-2">
-                  <ShieldHalf className="w-4 h-4 mr-2" />
-                  <span>24/7 Email Support</span>
+                  <BadgeCheck className="w-4 h-4 mr-2" />
+                  <span>30-Day Satisfaction Guarantee — Cancel anytime within 30 days.</span>
                 </div>
               </div>
-            </CardFooter>
+            </CardContent>
           </Card>
         </div>
+        
       </div>
     </section>
   );

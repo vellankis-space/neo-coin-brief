@@ -54,66 +54,52 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
           <div className="md:col-span-3 text-center md:text-left">
             {/* Main Headline */}
             <h1 className="font-montserrat font-bold text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-6">
-              Stop Wasting Time on{' '}
-              <span className="bg-gradient-text bg-clip-text text-transparent">
-                Crypto News
-              </span>
+              Never Miss Another <span className="bg-gradient-bitcoin bg-clip-text text-transparent">Crypto Opportunity</span>
             </h1>
             
             {/* Subheading */}
             <h2 className="font-inter text-light-gray text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
-              Get the top 20 crypto insights delivered straight to your inbox—three times a day—so you stay informed without burning the midnight oil.
+              <span className="bg-gradient-bitcoin bg-clip-text text-transparent">AI</span> scans Twitter 24/7 to deliver the hottest crypto insights 3x daily — straight from the source.
             </h2>
             
-            {/* Subscription Form */}
-            <div className="mb-6">
-              {!isSubmitted ? (
-                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-lg mx-auto lg:mx-0">
-                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
-                    <div className="relative flex-1">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                      <Input
-                        type="email"
-                        placeholder="Enter your email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className={`pl-10 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
-                      />
-                      {error && <p className="text-red-300 text-sm mt-1">{error}</p>}
-                    </div>
-                    <Button 
-                      type="submit"
-                      className="h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
-                    </Button>
-                  </form>
-                </div>
-              ) : (
-                <div className="backdrop-blur-glass bg-glass-bg border border-glass-border rounded-2xl p-6 shadow-glass max-w-md mx-auto lg:mx-0">
-                  <div className="flex items-center gap-3">
+            {/* Value Proposition */}
+            <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-white font-inter">Thank you! Check your email for confirmation.</span>
-                  </div>
+                    <span className="text-white font-inter">Live Twitter monitoring of crypto influencers & whales</span>
                 </div>
-              )}
+                <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="text-white font-inter">Top 1% insights from 50K+ daily Twitter posts</span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="text-white font-inter">Perfect timing — 8 AM, 1 PM, 6 PM UTC</span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="text-white font-inter">Join 1,247+ traders getting Twitter's best signals</span>
+                </div>
             </div>
-            
-            {/* Trust Indicators */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-center lg:justify-start gap-2 text-light-gray">
-                <Users className="h-4 w-4 text-secondary" />
-                <span className="font-inter font-medium flex items-center gap-2">
-                  <span className="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
-                  Join 1,000+ crypto enthusiasts
-                </span>
-              </div>
-              <p className="text-sm text-white/70 font-inter opacity-80">
-                3 emails daily • Unsubscribe anytime
-              </p>
-            </div>
+
+            {/* Email Signup Form */}
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+                <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className={`pl-4 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
+                />
+                <Button 
+                  type="submit"
+                  className="h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
+                  disabled={isLoading}
+                >
+                  {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
+                </Button>
+            </form>
           </div>
           
           {/* Right Column - Newsletter Preview */}
@@ -129,17 +115,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
                   <NewsletterPreviewCard
                     emoji="🔥"
                     title="Top Tweet Alert"
-                    description="Bitcoin breaks $45K resistance level with unprecedented trading volume..."
+                    description="Bitcoin whale moved $2.1B — price impact analysis"
                   />
                   <NewsletterPreviewCard
                     emoji="📊"
                     title="Market Analysis"
-                    description="AI-curated insights from top crypto analysts and market makers..."
+                    description="3 altcoins showing breakout signals"
                   />
                   <NewsletterPreviewCard
-                    emoji="💡"
+                    emoji="🚀"
                     title="Altcoin Spotlight"
-                    description="Discover the next big altcoin with our in-depth analysis and price predictions."
+                    description="New DeFi protocol raised $50M — entry opportunity"
                   />
                 </div>
               </div>

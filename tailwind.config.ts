@@ -77,6 +77,7 @@ export default {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-card': 'var(--gradient-card)',
 				'gradient-text': 'var(--gradient-text)',
+				'gradient-bitcoin': 'var(--gradient-bitcoin)',
 				'gradient-glow': 'var(--gradient-glow)',
 			},
 			boxShadow: {

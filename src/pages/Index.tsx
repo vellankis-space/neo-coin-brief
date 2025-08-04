@@ -5,6 +5,8 @@ import HowItWorks from '@/components/HowItWorks';
 import Features from '@/components/Features';
 import Pricing from '@/components/Pricing';
 import SocialProof from '@/components/SocialProof';
+import Faq from '@/components/Faq';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
@@ -39,8 +41,16 @@ const Index = () => {
         <SocialProof />
       </AnimatedSection>
 
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <Faq />
+      </AnimatedSection>
+
       {/* Footer */}
       <Footer />
+
+      {/* Exit Intent Popup */}
+      <ExitIntentPopup />
     </div>
   );
 };

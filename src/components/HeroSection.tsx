@@ -41,7 +41,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 overflow-hidden">
+    <section className="relative bg-gradient-hero flex justify-center px-4 sm:px-6 lg:px-8 py-12 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-glow rounded-full blur-3xl"></div>

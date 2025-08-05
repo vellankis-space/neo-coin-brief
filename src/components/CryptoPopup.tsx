@@ -10,7 +10,7 @@ const CryptoPopup = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 5000); // Show after 5 seconds
+    }, 10000); // Show after 10 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -36,7 +36,7 @@ const CryptoPopup = () => {
           
           <div className="space-y-2">
             <p className="text-white/90 text-lg font-medium text-center">
-              Join 1,247+ traders getting alpha signals
+              While others scroll Twitter, we deliver results
             </p>
             <div className="flex items-center justify-center gap-2 text-crypto-positive text-sm">
               <TrendingUp size={16} />

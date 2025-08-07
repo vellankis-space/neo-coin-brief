@@ -33,7 +33,7 @@ const Index = () => {
 
       {/* Pricing Section */}
       <AnimatedSection>
-        <Pricing customerEmail={customerEmail} />
+        <Pricing />
       </AnimatedSection>
 
       {/* Social proof section */}

@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-const Terms = () => {
+const TermsAndConditions = () => {
   return (
     <div className="min-h-screen bg-gradient-main">
       <div className="container mx-auto px-4 py-12 sm:py-16">
@@ -15,7 +15,7 @@ const Terms = () => {
 
         <div className="max-w-4xl mx-auto bg-glass border-crypto-glow backdrop-blur-xl rounded-2xl p-8">
           <h1 className="text-4xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-8">
-            Terms of Service
+            Terms and Conditions
           </h1>
           
           <div className="space-y-8 text-white/80">
@@ -137,4 +137,4 @@ const Terms = () => {
   );
 };
 
-export default Terms;
+export default TermsAndConditions;

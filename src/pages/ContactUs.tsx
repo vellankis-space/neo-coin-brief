@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-const Contact = () => {
+const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,7 +67,7 @@ const Contact = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-crypto-text bg-clip-text text-transparent mb-4 sm:mb-6">
-              Get in Touch
+              Contact Us
             </h1>
             <p className="text-xl text-white/80 leading-relaxed max-w-2xl mx-auto">
               Have questions about our crypto insights? Need support with your subscription? 
@@ -196,4 +196,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactUs;

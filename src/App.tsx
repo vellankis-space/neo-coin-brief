@@ -6,9 +6,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Terms from "./pages/Terms";
-import Contact from "./pages/Contact";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import ContactUs from "./pages/ContactUs";
+import SuccessPage from "./pages/Success";
 import NotFound from "./pages/NotFound";
+import CancellationAndRefund from "./pages/CancellationAndRefund";
 
 const queryClient = new QueryClient();
 
@@ -22,8 +24,10 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

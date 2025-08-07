@@ -4,18 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, Users, Loader2, Twitter } from 'lucide-react';
 import NewsletterPreviewCard from './NewsletterPreviewCard';
 
-interface HeroSectionProps {
-  setCustomerEmail: (email: string) => void;
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
+const HeroSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubscribe = async () => {
     setError('');
 
     if (!email) {
@@ -30,14 +24,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
 
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    setCustomerEmail(email);
-    console.log('Email submitted:', email);
-
-    setIsLoading(false);
-    setIsSubmitted(true);
+    try {
+      // Simulate a successful subscription without Stripe
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call delay
+      console.log('Subscription successful for:', email);
+      alert('Thank you for subscribing!'); // Or use a more sophisticated notification system
+    } catch (error) {
+      console.error('Subscription error:', error);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,7 +77,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
             </div>
 
             {/* Email Signup Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
                 <Input
                     type="email"
                     placeholder="Enter your email address"
@@ -90,13 +87,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setCustomerEmail }) => {
                     className={`w-full sm:w-auto flex-grow pl-4 h-12 bg-white/20 border-white/30 text-white placeholder:text-gray-300 focus:border-secondary rounded-xl backdrop-blur-sm ${error ? 'border-2 border-red-500' : ''}`}
                 />
                 <Button 
-                  type="submit"
-                  className="w-full sm:w-auto h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
+                  onClick={handleSubscribe}
                   disabled={isLoading}
+                  className="w-full sm:w-auto h-12 px-8 bg-secondary text-white font-inter font-semibold rounded-xl shadow-elevation transition-all duration-300"
                 >
                   {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
                 </Button>
-            </form>
+            </div>
+            {error && <p className="text-red-500 mt-2">{error}</p>}
           </div>
           
           {/* Right Column - Newsletter Preview */}

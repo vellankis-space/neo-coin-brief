@@ -28,7 +28,7 @@ const PrivacyPolicy = () => {
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Email address</li>
                 <li>Name and contact information</li>
-                <li>Payment information (processed securely through Stripe)</li>
+                <li>Payment information (not stored by us)</li>
                 <li>Communication preferences</li>
               </ul>
             </section>

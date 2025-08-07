@@ -12,56 +12,11 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown, BadgeCheck } from "lucide-react";
-import { loadStripe } from '@stripe/stripe-js';
 
-interface PricingProps {
-  customerEmail: string;
-}
 
-const stripePromise = loadStripe(import.meta.env.VITE_NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-const Pricing: React.FC<PricingProps> = ({ customerEmail }) => {
-  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
-  const handleSubscription = async () => {
-    const stripe = await stripePromise;
-
-    if (!stripe) {
-      console.error('Stripe.js failed to load.');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          priceId: import.meta.env.VITE_STRIPE_PRICE_ID,
-          customerEmail: customerEmail,
-          successUrl: `${window.location.origin}/success`,
-          cancelUrl: `${window.location.origin}/#pricing`,
-        }),
-      });
-
-      const session = await response.json();
-
-      if (session.error) {
-        console.error('Error creating checkout session:', session.error);
-        alert(session.error);
-        return;
-      }
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        console.error('Stripe checkout error:', result.error.message);
-      }
-    } catch (error) {
-      console.error('Failed to initiate checkout:', error);
-    }
+const Pricing: React.FC = () => {
+  const handleSubscription = () => {
+    alert("Subscription functionality is currently unavailable.");
   };
 
   return (

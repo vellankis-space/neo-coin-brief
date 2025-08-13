@@ -1,9 +1,5 @@
 
-// Add to .env.local:
-// NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-// STRIPE_SECRET_KEY=sk_test_...
-// STRIPE_WEBHOOK_SECRET=whsec_...
-// STRIPE_PRICE_ID=price_12345
+
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -16,7 +12,7 @@ import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown, BadgeCheck } from "l
 
 const Pricing: React.FC = () => {
   const handleSubscription = () => {
-    alert("Subscription functionality is currently unavailable.");
+    window.open("https://payments.cashfree.com/forms/twitter-signals", "_blank");
   };
 
   return (
@@ -33,7 +29,7 @@ const Pricing: React.FC = () => {
             <CardHeader className="text-center pt-8">
               <CardTitle className="text-xl sm:text-2xl font-bold text-[#1E1E2F]">Pro Newsletter</CardTitle>
               <div className="my-4 flex flex-col sm:flex-row items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-bold text-gray-900">$9</span>
+                <span className="text-4xl sm:text-5xl font-bold text-gray-900">₹800</span>
                 <span className="text-lg sm:text-xl text-gray-500 ml-2">/month</span>
               </div>
             </CardHeader>
@@ -65,7 +61,7 @@ const Pricing: React.FC = () => {
               </Button>
               <div className="text-center mt-4 text-xs sm:text-sm text-gray-500">
                 <div className="flex items-center justify-center mt-2">
-                  <BadgeCheck className="w-4 h-4 mr-2" />
+                  <BadgeCheck className="w-6 h-6 sm:w-8 sm:h-8 mr-2" />
                   <span>30-Day Satisfaction Guarantee — Cancel anytime within 30 days.</span>
                 </div>
               </div>

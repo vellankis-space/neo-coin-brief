@@ -25,12 +25,10 @@ const HeroSection: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Simulate a successful subscription without Stripe
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call delay
-      console.log('Subscription successful for:', email);
-      alert('Thank you for subscribing!'); // Or use a more sophisticated notification system
+      // Redirect to pricing section
+      window.location.hash = '#pricing';
     } catch (error) {
-      console.error('Subscription error:', error);
+      console.error('Error redirecting:', error);
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);

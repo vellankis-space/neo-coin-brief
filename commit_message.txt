@@ -1,0 +1,9 @@
+feat: Implement Cashfree integration and subscription flow
+
+- Added Cashfree payment gateway integration.
+- Implemented subscription flow with email saving to Supabase.
+- Updated UI components (HeroSection, Pricing, CryptoPopup, CryptoTicker, Footer) for new features.
+- Added new API endpoints for Cashfree order creation, payment session, email saving, and subscription status updates.
+- Introduced PaymentFailed page and updated Success page for payment status handling.
+- Configured environment variables and Vercel settings for Cashfree.
+- Updated package dependencies.

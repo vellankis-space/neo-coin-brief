@@ -3,8 +3,9 @@ import 'dotenv/config';
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl || '', supabaseServiceRoleKey || supabaseAnonKey || '');
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -13,6 +14,14 @@ export default async function handler(req, res) {
 
     if (!normalizedEmail) {
       return res.status(400).json({ error: 'Email is required.' });
+    }
+
+    if (!supabaseUrl || !(supabaseServiceRoleKey || supabaseAnonKey)) {
+      console.error('Supabase env missing:', {
+        hasUrl: Boolean(supabaseUrl),
+        hasKey: Boolean(supabaseServiceRoleKey || supabaseAnonKey),
+      });
+      return res.status(500).json({ error: 'Server misconfiguration: Supabase env not set.' });
     }
 
     try {
@@ -40,7 +49,7 @@ export default async function handler(req, res) {
           return res.status(500).json({ error: updateError.message });
         }
 
-        res.status(200).json({ message: 'Email updated successfully!', data: updateData });
+        res.status(200).json({ message: 'Email updated successfully!', matched: updateData?.length || 0 });
       } else {
         // Email doesn't exist, insert new record
         const { data: insertData, error: insertError } = await supabase
@@ -49,14 +58,15 @@ export default async function handler(req, res) {
             email: normalizedEmail, 
             status: 'pending',
             cashfree_transaction_id: null // Add this field since you renamed it
-          }]);
+          }])
+          .select();
 
         if (insertError) {
           console.error('Supabase insert error:', insertError);
           return res.status(500).json({ error: insertError.message });
         }
 
-        res.status(200).json({ message: 'Email saved successfully!', data: insertData });
+        res.status(200).json({ message: 'Email saved successfully!', matched: insertData?.length || 0 });
       }
     } catch (error) {
       console.error('Server error:', error);

@@ -1,8 +1,7 @@
-
-
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { Input } from '@/components/ui/input';
+import { Loader2, Mail } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -11,8 +10,69 @@ import { CircleCheck, LockKeyhole, ShieldHalf, ChevronDown, BadgeCheck } from "l
 
 
 const Pricing: React.FC = () => {
-  const handleSubscription = () => {
-    window.open("https://payments.cashfree.com/forms/twitter-signals", "_blank");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubscribe = async () => {
+    setError('');
+
+    if (!email) {
+      setError('Email address is required.');
+      return;
+    }
+
+    if (!/^(([^<>()[\]\\.,;:\s@\"]+(\\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // 1. Save email to Supabase
+      const saveEmailResponse = await fetch('/api/save-email-to-supabase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!saveEmailResponse.ok) {
+        const errorData = await saveEmailResponse.json();
+        throw new Error(errorData.error || 'Failed to save email.');
+      }
+
+      // 2. Get Cashfree payment URL
+      const cashfreeResponse = await fetch('/api/create-cashfree-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!cashfreeResponse.ok) {
+        const errorData = await cashfreeResponse.json();
+        throw new Error(errorData.error || 'Failed to get Cashfree URL.');
+      }
+
+      const { redirect_url } = await cashfreeResponse.json();
+
+      if (redirect_url) {
+        // 3. Redirect to Cashfree payment page
+        window.location.href = redirect_url;
+      } else {
+        throw new Error('Cashfree redirect URL not found.');
+      }
+
+    } catch (error: any) {
+      console.error('Subscription error:', error);
+      setError(error.message || 'An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -53,12 +113,24 @@ const Pricing: React.FC = () => {
                 </li>
               </ul>
               <Separator className="my-6" />
-              <Button
-                onClick={handleSubscription}
-                className="w-full mt-6 bg-[#00CFAF] text-white rounded-lg py-3 sm:py-4 text-base sm:text-lg hover:bg-[#00b89f] hover:scale-102 transition-transform"
-              >
-                Start Subscription
-              </Button>
+              <div className="space-y-4 mb-4">
+                <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className={`w-full pl-4 h-12 bg-gray-100 border-gray-300 text-gray-800 placeholder:text-gray-500 focus:border-blue-500 rounded-lg ${error ? 'border-2 border-red-500' : ''}`}
+                />
+                <Button 
+                  onClick={handleSubscribe}
+                  disabled={isLoading}
+                  className="w-full h-12 px-8 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition-all duration-300 hover:bg-blue-700"
+                >
+                  {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
+                </Button>
+              </div>
+              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <div className="text-center mt-4 text-xs sm:text-sm text-gray-500">
                 <div className="flex items-center justify-center mt-2">
                   <BadgeCheck className="w-6 h-6 sm:w-8 sm:h-8 mr-2" />
@@ -75,4 +147,3 @@ const Pricing: React.FC = () => {
 };
 
 export default Pricing;
-

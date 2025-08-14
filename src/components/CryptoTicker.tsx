@@ -54,6 +54,7 @@ const TickerContent: React.FC<{ data: CryptoData[] }> = ({ data }) => {
 
 const CryptoTicker: React.FC = () => {
   const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCryptoPrices = async () => {
@@ -66,6 +67,8 @@ const CryptoTicker: React.FC = () => {
         setCryptoData(data);
       } catch (error) {
         console.error("Error fetching crypto prices:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,7 +82,19 @@ const CryptoTicker: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 h-10 sm:h-12 overflow-hidden backdrop-blur-md bg-white/30 border-b border-white/10 text-gray-800">
       <div className="crypto-marquee flex items-center h-full">
-        <>
+        {loading ? (
+          <div className="flex items-center h-full animate-pulse">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="flex-shrink-0 flex items-center gap-2 text-xs sm:text-sm font-medium px-2 sm:px-4">
+                <div className="h-4 bg-gray-300 rounded w-16"></div>
+                <span className="text-gray-600">|</span>
+                <div className="h-4 bg-gray-300 rounded w-12"></div>
+                <div className="h-4 bg-gray-300 rounded w-16"></div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
             <div className="flex-shrink-0 flex items-center">
               <TickerContent data={cryptoData} />
             </div>
@@ -87,6 +102,7 @@ const CryptoTicker: React.FC = () => {
               <TickerContent data={cryptoData} />
             </div>
           </>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,12 @@
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
+const cors = require('cors'); // Import cors
 
-let cache = null;
-let cacheTimestamp = 0;
-const CACHE_DURATION = 45 * 1000; // 45 seconds
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Use cors middleware
+app.use(cors());
 
 const retry = async (fn, retries = 3, delay = 1000) => {
   try {
@@ -17,17 +21,8 @@ const retry = async (fn, retries = 3, delay = 1000) => {
   }
 };
 
-export default async function handler(req, res) {
-  console.log('Serverless function /api/crypto-prices.js started');
-  const now = Date.now();
-
-  if (cache && (now - cacheTimestamp < CACHE_DURATION)) {
-    console.log('Returning cached crypto prices');
-    return res.status(200).json(cache);
-  }
-
+app.get('/api/crypto-prices', async (req, res) => {
   try {
-    console.log('Attempting to fetch crypto prices from CoinGecko...');
     const response = await retry(async () => {
       return await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
     });
@@ -37,13 +32,13 @@ export default async function handler(req, res) {
       price: coin.current_price.toFixed(2),
       priceChangePercent: coin.price_change_percentage_24h.toFixed(2),
     }));
-
-    cache = top10ByVolume;
-    cacheTimestamp = now;
-    
     res.status(200).json(top10ByVolume);
   } catch (error) {
-    
+    console.error('Error fetching crypto prices:', error);
     res.status(500).json({ error: 'Failed to fetch crypto prices' });
   }
-}
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

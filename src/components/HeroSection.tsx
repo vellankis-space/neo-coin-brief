@@ -17,7 +17,7 @@ const HeroSection: React.FC = () => {
       return;
     }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    if (!/^(([^<>()[\]\\.,;:\s@\"]+(\\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
       setError('Please enter a valid email address.');
       return;
     }
@@ -25,11 +25,49 @@ const HeroSection: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Redirect to pricing section
-      window.location.hash = '#pricing';
-    } catch (error) {
-      console.error('Error redirecting:', error);
-      setError('An error occurred. Please try again.');
+      // 1. Save email to Supabase
+      const saveEmailResponse = await fetch('/api/save-email-to-supabase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!saveEmailResponse.ok) {
+        const errorData = await saveEmailResponse.json();
+        throw new Error(errorData.error || 'Failed to save email.');
+      }
+
+      // 2. Get Cashfree payment URL
+      const cashfreeResponse = await fetch('/api/create-cashfree-order', {
+        method: 'POST', // Assuming it's a POST request based on the API file
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // You might need to send some data here if the Cashfree API expects it,
+        // e.g., the email or a unique identifier for the subscription.
+        // For now, assuming it doesn't need specific body content for a static URL.
+        body: JSON.stringify({ email }), // Sending email for potential future use
+      });
+
+      if (!cashfreeResponse.ok) {
+        const errorData = await cashfreeResponse.json();
+        throw new Error(errorData.error || 'Failed to get Cashfree URL.');
+      }
+
+      const { redirect_url } = await cashfreeResponse.json();
+
+      if (redirect_url) {
+        // 3. Redirect to Cashfree payment page
+        window.location.href = redirect_url;
+      } else {
+        throw new Error('Cashfree redirect URL not found.');
+      }
+
+    } catch (error: any) {
+      console.error('Subscription error:', error);
+      setError(error.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }

@@ -1,64 +1,82 @@
-const { createClient } = require('@supabase/supabase-js');
-const crypto = require('crypto');
+import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config';
 
-// Initialize Supabase client
-// IMPORTANT: Replace with your actual Supabase URL and anon key
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// IMPORTANT: Replace with your actual Cashfree Webhook Secret
-// This should be stored securely, e.g., in environment variables
-const CASHFREE_WEBHOOK_SECRET = process.env.CASHFREE_WEBHOOK_SECRET;
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    try {
+      const { 
+        orderId, 
+        orderAmount, 
+        referenceId, 
+        txStatus, 
+        txTime, 
+        txMsg, 
+        signature,
+        customerEmail 
+      } = req.body;
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).send('Method Not Allowed');
-  }
+      console.log('Cashfree webhook received:', {
+        orderId,
+        orderAmount,
+        referenceId,
+        txStatus,
+        customerEmail
+      });
 
-  const payload = req.body;
-  const signature = req.headers['x-webhook-signature'];
+      // Verify the webhook signature (you should implement this for security)
+      // const isValidSignature = verifyCashfreeSignature(req.body, signature);
+      // if (!isValidSignature) {
+      //   return res.status(400).json({ error: 'Invalid signature' });
+      // }
 
-  if (!signature) {
-    return res.status(400).send('Webhook signature missing');
-  }
-
-  // Verify webhook signature
-  const hmac = crypto.createHmac('sha256', CASHFREE_WEBHOOK_SECRET);
-  hmac.update(JSON.stringify(payload));
-  const expectedSignature = hmac.digest('base64');
-
-  if (signature !== expectedSignature) {
-    console.warn('Webhook signature mismatch:', { received: signature, expected: expectedSignature });
-    return res.status(403).send('Invalid webhook signature');
-  }
-
-  console.log('Received Cashfree webhook:', payload);
-
-  try {
-    // Check payment status
-    // Cashfree webhook payload structure might vary, adjust as needed
-    const paymentStatus = payload.data.payment.payment_status;
-    const customerEmail = payload.data.customer_details.customer_email;
-
-    if (paymentStatus === 'SUCCESS' && customerEmail) {
-      const { data, error } = await supabase
-        .from('subscriptions') // Replace 'subscription' with your actual table name
-        .insert([{ email: customerEmail }]);
-
-      if (error) {
-        console.error('Error inserting email into Supabase:', error);
-        return res.status(500).json({ error: 'Failed to insert email' });
+      // Determine the status based on Cashfree transaction status
+      let subscriptionStatus = 'pending';
+      if (txStatus === 'SUCCESS') {
+        subscriptionStatus = 'completed';
+      } else if (txStatus === 'FAILED' || txStatus === 'CANCELLED') {
+        subscriptionStatus = 'failed';
       }
 
-      console.log('Email successfully added to Supabase:', customerEmail);
-      return res.status(200).json({ message: 'Webhook processed successfully' });
-    } else {
-      console.log('Payment not successful or email missing, not adding to Supabase.');
-      return res.status(200).json({ message: 'Payment not successful or email missing' });
+      // Update the subscription record
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .update({ 
+          status: subscriptionStatus,
+          cashfree_transaction_id: referenceId || orderId,
+          updated_at: new Date().toISOString()
+        })
+        .eq('email', customerEmail)
+        .select();
+
+      if (error) {
+        console.error('Supabase update error:', error);
+        return res.status(500).json({ error: error.message });
+      }
+
+      if (!data || data.length === 0) {
+        console.warn(`No subscription found for email: ${customerEmail}`);
+        return res.status(404).json({ error: 'Subscription not found.' });
+      }
+
+      console.log(`Subscription updated for ${customerEmail}: ${subscriptionStatus}`);
+
+      res.status(200).json({ 
+        message: 'Webhook processed successfully',
+        status: subscriptionStatus,
+        transaction_id: referenceId || orderId
+      });
+
+    } catch (error) {
+      console.error('Webhook processing error:', error);
+      res.status(500).json({ error: 'Internal server error.' });
     }
-  } catch (error) {
-    console.error('Error processing webhook:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-};
+} 

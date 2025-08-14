@@ -46,16 +46,7 @@ const CryptoPopup = () => {
         </DialogHeader>
         
         <div className="space-y-4 pt-4">
-          <div className="flex gap-2">
-            <Input 
-              type="email" 
-              placeholder="Enter your email..." 
-              className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-crypto-positive focus:ring-crypto-positive"
-            />
-            <Button className="bg-gradient-to-r from-crypto-positive to-emerald-400 hover:from-emerald-400 hover:to-crypto-positive text-white font-semibold px-6 shadow-lg hover:shadow-crypto transition-all duration-300">
-              Get Signals
-            </Button>
-          </div>
+          
           
           <div className="flex items-center justify-center gap-4 text-xs text-white/60">
             <span>✅ Cancel anytime</span>

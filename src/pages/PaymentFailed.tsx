@@ -1,15 +1,14 @@
-
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleCheck, Loader2 } from 'lucide-react'; // Added Loader2
+import { XCircle, Loader2 } from 'lucide-react';
 
-const SuccessPage = () => {
+const PaymentFailedPage = () => {
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session_id');
-  const email = searchParams.get('email'); // Cashfree passes email as a query param
-  const transactionId = searchParams.get('referenceId') || searchParams.get('orderId'); // Cashfree transaction ID
+  const email = searchParams.get('email');
+  const transactionId = searchParams.get('referenceId') || searchParams.get('orderId');
+  const errorMessage = searchParams.get('txMsg') || 'Payment was not completed successfully.';
 
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [updateStatusError, setUpdateStatusError] = useState<string | null>(null);
@@ -27,7 +26,7 @@ const SuccessPage = () => {
             },
             body: JSON.stringify({ 
               email,
-              status: 'completed',
+              status: 'failed',
               transaction_id: transactionId
             }),
           });
@@ -36,7 +35,7 @@ const SuccessPage = () => {
             const errorData = await response.json();
             throw new Error(errorData.error || 'Failed to update subscription status.');
           }
-          console.log('Subscription status updated to completed for:', email, 'Transaction ID:', transactionId);
+          console.log('Subscription status updated to failed for:', email, 'Transaction ID:', transactionId);
         } catch (error: any) {
           console.error('Error updating subscription status:', error);
           setUpdateStatusError(error.message || 'Could not update subscription status.');
@@ -48,28 +47,22 @@ const SuccessPage = () => {
       }
     };
 
-    if (sessionId) {
-      console.log('Checkout session ID:', sessionId);
-      // You might still want to send sessionId to backend for verification
-      // but the primary status update will be based on email for this flow.
-    }
-
     updateSubscriptionStatus();
-  }, [sessionId, email]); // Depend on sessionId and email
+  }, [email, transactionId]);
 
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md text-center shadow-lg">
         <CardHeader>
-          <div className="mx-auto bg-green-100 rounded-full p-4 w-24 h-24 flex items-center justify-center">
+          <div className="mx-auto bg-red-100 rounded-full p-4 w-24 h-24 flex items-center justify-center">
             {isUpdatingStatus ? (
               <Loader2 className="text-blue-600 w-16 h-16 animate-spin" />
             ) : (
-              <CircleCheck className="text-green-600 w-16 h-16" />
+              <XCircle className="text-red-600 w-16 h-16" />
             )}
           </div>
           <CardTitle className="text-2xl font-bold mt-4">
-            {isUpdatingStatus ? 'Processing Payment...' : 'Payment Successful!'}
+            {isUpdatingStatus ? 'Processing...' : 'Payment Failed'}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -80,20 +73,25 @@ const SuccessPage = () => {
           ) : (
             <>
               <p className="text-gray-600 mb-6">
-                Thank you for subscribing to the Pro Newsletter! Your payment has been processed successfully.
+                {errorMessage}
               </p>
               <p className="text-sm text-gray-500 mb-6">
-                A confirmation has been sent to your email address. You now have full access to all our premium features.
+                Your subscription has not been activated. You can try again or contact support if you need assistance.
               </p>
             </>
           )}
-          <Button asChild disabled={isUpdatingStatus}>
-            <Link to="/">Return to Homepage</Link>
-          </Button>
+          <div className="space-y-3">
+            <Button asChild disabled={isUpdatingStatus} className="w-full">
+              <Link to="/">Return to Homepage</Link>
+            </Button>
+            <Button asChild disabled={isUpdatingStatus} variant="outline" className="w-full">
+              <Link to="/#pricing">Try Again</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default SuccessPage;
+export default PaymentFailedPage; 

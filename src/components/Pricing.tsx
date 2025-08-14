@@ -48,8 +48,9 @@ const Pricing: React.FC = () => {
         throw new Error(errorData.error || 'Failed to save email.');
       }
 
-      // 2. No payment redirect for now
-      alert('Thanks! Your email has been saved. We will contact you soon.');
+      // 2. Redirect to Cashfree Payment Form
+      const paymentFormUrl = `https://payments.cashfree.com/forms/twitter-signals?customerEmail=${encodeURIComponent(email)}`;
+      window.location.href = paymentFormUrl;
 
     } catch (error: any) {
       console.error('Subscription error:', error);

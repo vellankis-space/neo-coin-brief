@@ -9,16 +9,21 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { 
-        orderId, 
-        orderAmount, 
-        referenceId, 
-        txStatus, 
-        txTime, 
-        txMsg, 
+      // Support multiple Cashfree payload shapes
+      const {
+        orderId,
+        orderAmount,
+        referenceId,
+        txStatus,
+        txTime,
+        txMsg,
         signature,
-        customerEmail 
-      } = req.body;
+        customerEmail,
+        // alternate keys that may appear
+        email,
+        transactionId,
+        status
+      } = req.body || {};
 
       console.log('Cashfree webhook received:', {
         orderId,
@@ -35,10 +40,11 @@ export default async function handler(req, res) {
       // }
 
       // Determine the status based on Cashfree transaction status
+      const effectiveStatus = (txStatus || status || '').toUpperCase();
       let subscriptionStatus = 'pending';
-      if (txStatus === 'SUCCESS') {
+      if (effectiveStatus === 'SUCCESS') {
         subscriptionStatus = 'completed';
-      } else if (txStatus === 'FAILED' || txStatus === 'CANCELLED') {
+      } else if (effectiveStatus === 'FAILED' || effectiveStatus === 'CANCELLED') {
         subscriptionStatus = 'failed';
       }
 
@@ -47,10 +53,10 @@ export default async function handler(req, res) {
         .from('subscriptions')
         .update({ 
           status: subscriptionStatus,
-          cashfree_transaction_id: referenceId || orderId,
+          cashfree_transaction_id: referenceId || transactionId || orderId || null,
           updated_at: new Date().toISOString()
         })
-        .eq('email', customerEmail)
+        .eq('email', customerEmail || email)
         .select();
 
       if (error) {
@@ -63,12 +69,12 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: 'Subscription not found.' });
       }
 
-      console.log(`Subscription updated for ${customerEmail}: ${subscriptionStatus}`);
+      console.log(`Subscription updated for ${customerEmail || email}: ${subscriptionStatus}`);
 
       res.status(200).json({ 
         message: 'Webhook processed successfully',
         status: subscriptionStatus,
-        transaction_id: referenceId || orderId
+        transaction_id: referenceId || transactionId || orderId
       });
 
     } catch (error) {

@@ -30,6 +30,10 @@ const Pricing: React.FC = () => {
     setIsLoading(true);
 
     try {
+      // Persist email locally as a fallback for return pages
+      try {
+        window.localStorage.setItem('checkout_email', email);
+      } catch {}
       // 1. Save email to Supabase
       const saveEmailResponse = await fetch('/api/save-email-to-supabase', {
         method: 'POST',

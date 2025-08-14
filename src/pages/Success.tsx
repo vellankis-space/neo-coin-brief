@@ -8,8 +8,20 @@ import { CircleCheck, Loader2 } from 'lucide-react'; // Added Loader2
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const email = searchParams.get('email'); // Cashfree passes email as a query param
-  const transactionId = searchParams.get('referenceId') || searchParams.get('orderId'); // Cashfree transaction ID
+  let email = searchParams.get('email');
+  // Cashfree forms may pass different transaction keys depending on integration
+  const transactionId =
+    searchParams.get('referenceId') ||
+    searchParams.get('orderId') ||
+    searchParams.get('txId') ||
+    searchParams.get('transactionId');
+
+  // Fallback: if email missing in query, use locally persisted value
+  if (!email) {
+    try {
+      email = window.localStorage.getItem('checkout_email');
+    } catch {}
+  }
 
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [updateStatusError, setUpdateStatusError] = useState<string | null>(null);

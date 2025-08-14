@@ -6,8 +6,17 @@ import { XCircle, Loader2 } from 'lucide-react';
 
 const PaymentFailedPage = () => {
   const [searchParams] = useSearchParams();
-  const email = searchParams.get('email');
-  const transactionId = searchParams.get('referenceId') || searchParams.get('orderId');
+  let email = searchParams.get('email');
+  const transactionId =
+    searchParams.get('referenceId') ||
+    searchParams.get('orderId') ||
+    searchParams.get('txId') ||
+    searchParams.get('transactionId');
+  if (!email) {
+    try {
+      email = window.localStorage.getItem('checkout_email');
+    } catch {}
+  }
   const errorMessage = searchParams.get('txMsg') || 'Payment was not completed successfully.';
 
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);

@@ -13,6 +13,7 @@ const CASHFREE_ENV = (process.env.CASHFREE_ENV || 'sandbox').toLowerCase(); // '
 const CASHFREE_API_BASE = CASHFREE_ENV === 'production'
   ? 'https://api.cashfree.com/pg'
   : 'https://sandbox.cashfree.com/pg';
+const CASHFREE_PAYMENT_FORM_HANDLE = process.env.CASHFREE_PAYMENT_FORM_HANDLE || 'twitter-signals';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -81,6 +82,20 @@ export default async function handler(req, res) {
     } catch (err) {
       const data = err?.response?.data;
       console.error('Cashfree order create failed:', data || err.message || err);
+      // Graceful fallback to Payment Form if authentication error or credential/config issue
+      const status = err?.response?.status || 0;
+      const errType = data?.type || '';
+      if (status === 401 || status === 403 || errType === 'authentication_error') {
+        const paymentFormUrl = `https://payments.cashfree.com/forms/${encodeURIComponent(CASHFREE_PAYMENT_FORM_HANDLE)}?customerEmail=${encodeURIComponent(normalizedEmail)}`;
+        console.warn('Falling back to Cashfree Payment Form due to auth error.');
+        return res.status(200).json({
+          order_id: null,
+          redirect_url: paymentFormUrl,
+          payment_session_id: null,
+          env: CASHFREE_ENV,
+          fallback: 'payment_form'
+        });
+      }
       return res.status(502).json({ error: 'Failed to create Cashfree order.', details: data });
     }
 

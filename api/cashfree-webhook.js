@@ -9,6 +9,39 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
+      // Ensure we can handle JSON and x-www-form-urlencoded payloads from Cashfree
+      const parseRequestBody = async () => {
+        const existing = req.body && Object.keys(req.body).length > 0 ? req.body : null;
+        if (existing) return existing;
+        const chunks = [];
+        for await (const chunk of req) {
+          chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+        }
+        const raw = Buffer.concat(chunks).toString('utf8');
+        const contentType = (req.headers['content-type'] || '').toLowerCase();
+        if (contentType.includes('application/json')) {
+          try { return JSON.parse(raw || '{}'); } catch { return {}; }
+        }
+        if (contentType.includes('application/x-www-form-urlencoded')) {
+          const params = new URLSearchParams(raw);
+          const obj = {};
+          for (const [k, v] of params.entries()) obj[k] = v;
+          return obj;
+        }
+        // Fallback attempt: try JSON first, then URLSearchParams
+        try { return JSON.parse(raw || '{}'); } catch {}
+        try {
+          const params = new URLSearchParams(raw);
+          const obj = {};
+          for (const [k, v] of params.entries()) obj[k] = v;
+          return obj;
+        } catch {
+          return {};
+        }
+      };
+
+      const payload = await parseRequestBody();
+
       // Support multiple Cashfree payload shapes
       const {
         orderId,
@@ -22,15 +55,16 @@ export default async function handler(req, res) {
         // alternate keys that may appear
         email,
         transactionId,
-        status
-      } = req.body || {};
+        status,
+        customer_email
+      } = payload || {};
 
       console.log('Cashfree webhook received:', {
         orderId,
         orderAmount,
         referenceId,
         txStatus,
-        customerEmail
+        customerEmail: customerEmail || customer_email || email
       });
 
       // Verify the webhook signature (you should implement this for security)
@@ -54,9 +88,8 @@ export default async function handler(req, res) {
         .update({ 
           status: subscriptionStatus,
           cashfree_transaction_id: referenceId || transactionId || orderId || null,
-          updated_at: new Date().toISOString()
         })
-        .eq('email', customerEmail || email)
+        .eq('email', customerEmail || customer_email || email)
         .select();
 
       if (error) {

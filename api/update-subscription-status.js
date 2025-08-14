@@ -16,8 +16,7 @@ export default async function handler(req, res) {
 
     try {
       const updateData = { 
-        status: status,
-        updated_at: new Date().toISOString()
+        status: status
       };
 
       // Add transaction ID if provided

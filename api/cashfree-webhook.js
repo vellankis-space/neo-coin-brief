@@ -3,8 +3,11 @@ import 'dotenv/config';
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Prefer service role key on server to bypass RLS for webhooks
+const supabase = createClient(supabaseUrl, supabaseServiceRoleKey || supabaseAnonKey);
+console.log('Supabase using service role:', Boolean(supabaseServiceRoleKey));
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -41,6 +44,7 @@ export default async function handler(req, res) {
       };
 
       const payload = await parseRequestBody();
+      console.log('Webhook payload keys:', Object.keys(payload || {}));
 
       // Support multiple Cashfree payload shapes
       const {
@@ -76,21 +80,122 @@ export default async function handler(req, res) {
       // Determine the status based on Cashfree transaction status
       const effectiveStatus = (txStatus || status || '').toUpperCase();
       let subscriptionStatus = 'pending';
-      if (effectiveStatus === 'SUCCESS') {
+      if (['SUCCESS', 'PAID', 'COMPLETED'].includes(effectiveStatus)) {
         subscriptionStatus = 'completed';
       } else if (effectiveStatus === 'FAILED' || effectiveStatus === 'CANCELLED') {
         subscriptionStatus = 'failed';
       }
 
-      // Update the subscription record
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .update({ 
-          status: subscriptionStatus,
-          cashfree_transaction_id: referenceId || transactionId || orderId || null,
-        })
-        .eq('email', customerEmail || customer_email || email)
-        .select();
+      const identifiedEmail = (customerEmail || customer_email || email || '').toLowerCase().trim() || null;
+      const transactionIdentifier = referenceId || transactionId || orderId || null;
+
+      let data = null;
+      let error = null;
+
+      // First try: update by transaction id if we already attached it previously
+      if (transactionIdentifier) {
+        const updateByTxn = await supabase
+          .from('subscriptions')
+          .update({
+            status: subscriptionStatus,
+          })
+          .eq('cashfree_transaction_id', transactionIdentifier)
+          .select();
+        if (updateByTxn.error) {
+          error = updateByTxn.error;
+        } else if (updateByTxn.data && updateByTxn.data.length > 0) {
+          data = updateByTxn.data;
+          console.log('Update by transaction id result:', { matched: data.length, transactionIdentifier });
+        }
+      }
+
+      if (!data && !error && identifiedEmail) {
+        // Primary path: update by email
+        const updateResponse = await supabase
+          .from('subscriptions')
+          .update({ 
+            status: subscriptionStatus,
+            cashfree_transaction_id: transactionIdentifier,
+          })
+          .ilike('email', identifiedEmail)
+          .select();
+        data = updateResponse.data;
+        error = updateResponse.error;
+        console.log('Update by email result:', { matched: data?.length || 0, email: identifiedEmail });
+
+        // If nothing matched by email, attempt fallback strategy as well
+        if (!error && (!data || data.length === 0)) {
+          // Try upsert/insert if we have an email
+          const upsertPayload = [{
+            email: identifiedEmail,
+            status: subscriptionStatus,
+            cashfree_transaction_id: transactionIdentifier,
+          }];
+          const upsertResp = await supabase
+            .from('subscriptions')
+            .upsert(upsertPayload, { onConflict: 'email' })
+            .select();
+          if (!upsertResp.error) {
+            data = upsertResp.data;
+            console.log('Upsert by email result:', { matched: data?.length || 0, email: identifiedEmail });
+          }
+
+          if (!data || data.length === 0) {
+            const { data: pendingRows, error: findError } = await supabase
+              .from('subscriptions')
+              .select('id, email, status')
+              .eq('status', 'pending')
+              .order('created', { ascending: false })
+              .limit(1);
+
+            if (!findError && pendingRows && pendingRows.length > 0) {
+              const targetId = pendingRows[0].id;
+              const updateFallback = await supabase
+                .from('subscriptions')
+                .update({
+                  status: subscriptionStatus,
+                  cashfree_transaction_id: transactionIdentifier,
+                })
+                .eq('id', targetId)
+                .select();
+              data = updateFallback.data;
+              error = updateFallback.error;
+              console.log('Fallback update after email miss:', { targetId, matched: data?.length || 0 });
+            }
+          }
+        }
+      } else if (transactionIdentifier) {
+        // Fallback: locate most recent pending record and update by id
+        const { data: pendingRows, error: findError } = await supabase
+          .from('subscriptions')
+          .select('id, email, status')
+          .eq('status', 'pending')
+          .order('created', { ascending: false })
+          .limit(1);
+
+        if (findError) {
+          error = findError;
+        } else if (pendingRows && pendingRows.length > 0) {
+          const targetId = pendingRows[0].id;
+          const updateResponse = await supabase
+            .from('subscriptions')
+            .update({
+              status: subscriptionStatus,
+              cashfree_transaction_id: transactionIdentifier,
+            })
+            .eq('id', targetId)
+            .select();
+          data = updateResponse.data;
+          error = updateResponse.error;
+          console.log('Update by fallback pending record:', { targetId, matched: data?.length || 0 });
+        } else {
+          data = [];
+          console.warn('No pending subscription found to attach transaction when email missing.');
+        }
+      } else {
+        console.warn('Webhook missing both email and transaction identifiers.');
+        return res.status(400).json({ error: 'Missing email/transaction identifiers in webhook.' });
+      }
 
       if (error) {
         console.error('Supabase update error:', error);

@@ -9,8 +9,9 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email } = req.body;
+    const normalizedEmail = (email || '').toLowerCase().trim();
 
-    if (!email) {
+    if (!normalizedEmail) {
       return res.status(400).json({ error: 'Email is required.' });
     }
 
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
       const { data: existingData, error: checkError } = await supabase
         .from('subscriptions')
         .select('email, status')
-        .eq('email', email)
+        .ilike('email', normalizedEmail)
         .single();
 
       if (checkError && checkError.code !== 'PGRST116') { // PGRST116 is "not found" error
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
         const { data: updateData, error: updateError } = await supabase
           .from('subscriptions')
           .update({ status: 'pending' })
-          .eq('email', email);
+          .ilike('email', normalizedEmail);
 
         if (updateError) {
           console.error('Supabase update error:', updateError);
@@ -45,7 +46,7 @@ export default async function handler(req, res) {
         const { data: insertData, error: insertError } = await supabase
           .from('subscriptions')
           .insert([{ 
-            email: email, 
+            email: normalizedEmail, 
             status: 'pending',
             cashfree_transaction_id: null // Add this field since you renamed it
           }]);

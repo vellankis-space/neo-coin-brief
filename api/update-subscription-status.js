@@ -9,8 +9,9 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, status = 'completed', transaction_id } = req.body;
+    const normalizedEmail = (email || '').toLowerCase().trim();
 
-    if (!email) {
+    if (!normalizedEmail) {
       return res.status(400).json({ error: 'Email is required.' });
     }
 
@@ -27,7 +28,7 @@ export default async function handler(req, res) {
       const { data, error } = await supabase
         .from('subscriptions')
         .update(updateData)
-        .eq('email', email)
+        .ilike('email', normalizedEmail)
         .select();
 
       if (error) {
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
       }
 
       if (!data || data.length === 0) {
-        console.warn(`No subscription found for email: ${email}`);
+        console.warn(`No subscription found for email: ${normalizedEmail}`);
         return res.status(404).json({ error: 'Subscription not found.' });
       }
 
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
         message: 'Subscription status updated successfully!', 
         data,
         status: status,
-        transaction_id: transaction_id
+         transaction_id: transaction_id
       });
     } catch (error) {
       console.error('Server error:', error);

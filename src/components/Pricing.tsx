@@ -48,28 +48,8 @@ const Pricing: React.FC = () => {
         throw new Error(errorData.error || 'Failed to save email.');
       }
 
-      // 2. Get Cashfree payment URL
-      const cashfreeResponse = await fetch('/api/create-cashfree-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!cashfreeResponse.ok) {
-        const errorData = await cashfreeResponse.json();
-        throw new Error(errorData.error || 'Failed to get Cashfree URL.');
-      }
-
-      const { redirect_url } = await cashfreeResponse.json();
-
-      if (redirect_url) {
-        // 3. Redirect to Cashfree payment page
-        window.location.href = redirect_url;
-      } else {
-        throw new Error('Cashfree redirect URL not found.');
-      }
+      // 2. No payment redirect for now
+      alert('Thanks! Your email has been saved. We will contact you soon.');
 
     } catch (error: any) {
       console.error('Subscription error:', error);
@@ -93,7 +73,7 @@ const Pricing: React.FC = () => {
             <CardHeader className="text-center pt-8">
               <CardTitle className="text-xl sm:text-2xl font-bold text-[#1E1E2F]">Pro Newsletter</CardTitle>
               <div className="my-4 flex flex-col sm:flex-row items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-bold text-gray-900">₹800</span>
+                <span className="text-4xl sm:text-5xl font-bold text-gray-900">₹250</span>
                 <span className="text-lg sm:text-xl text-gray-500 ml-2">/month</span>
               </div>
             </CardHeader>

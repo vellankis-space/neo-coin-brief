@@ -39,31 +39,8 @@ const HeroSection: React.FC = () => {
         throw new Error(errorData.error || 'Failed to save email.');
       }
 
-      // 2. Get Cashfree payment URL
-      const cashfreeResponse = await fetch('/api/create-cashfree-order', {
-        method: 'POST', // Assuming it's a POST request based on the API file
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // You might need to send some data here if the Cashfree API expects it,
-        // e.g., the email or a unique identifier for the subscription.
-        // For now, assuming it doesn't need specific body content for a static URL.
-        body: JSON.stringify({ email }), // Sending email for potential future use
-      });
-
-      if (!cashfreeResponse.ok) {
-        const errorData = await cashfreeResponse.json();
-        throw new Error(errorData.error || 'Failed to get Cashfree URL.');
-      }
-
-      const { redirect_url } = await cashfreeResponse.json();
-
-      if (redirect_url) {
-        // 3. Redirect to Cashfree payment page
-        window.location.href = redirect_url;
-      } else {
-        throw new Error('Cashfree redirect URL not found.');
-      }
+      // 2. No payment redirect for now
+      alert('Thanks! Your email has been saved. We will contact you soon.');
 
     } catch (error: any) {
       console.error('Subscription error:', error);

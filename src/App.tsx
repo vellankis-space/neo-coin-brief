@@ -12,6 +12,7 @@ import SuccessPage from "./pages/Success";
 import PaymentFailedPage from "./pages/PaymentFailed";
 import NotFound from "./pages/NotFound";
 import CancellationAndRefund from "./pages/CancellationAndRefund";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
@@ -29,10 +30,14 @@ const App = () => (
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/success" element={<SuccessPage />} />
           <Route path="/payment-failed" element={<PaymentFailedPage />} />
-          <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
+          <Route
+            path="/cancellation-and-refund"
+            element={<CancellationAndRefund />}
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Analytics />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // 1. Save email to Supabase
+      // Save email to Supabase
       const saveEmailResponse = await fetch('/api/save-email-to-supabase', {
         method: 'POST',
         headers: {
@@ -39,9 +39,9 @@ const HeroSection: React.FC = () => {
         throw new Error(errorData.error || 'Failed to save email.');
       }
 
-      // 2. Redirect to Cashfree Payment Form
-      const paymentFormUrl = `https://payments.cashfree.com/forms/twitter-signals?customerEmail=${encodeURIComponent(email)}`;
-      window.location.href = paymentFormUrl;
+      // Show success message
+      alert('Thank you for subscribing to our newsletter!');
+      setEmail('');
 
     } catch (error: any) {
       console.error('Subscription error:', error);

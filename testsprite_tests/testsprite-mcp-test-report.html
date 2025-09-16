@@ -1,0 +1,146 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Markdown Preview</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          padding: 40px;
+          line-height: 1.6;
+          background: #fdfdfd;
+          color: #333;
+        }
+        pre {
+          background: #f4f4f4;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: monospace;
+          background: #eee;
+          padding: 2px 4px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>TestSprite AI Testing Report(MCP)</h1>
+<hr>
+<h2>1️⃣ Document Metadata</h2>
+<ul>
+<li><strong>Project Name:</strong> neo-coin-brief</li>
+<li><strong>Version:</strong> 0.0.0</li>
+<li><strong>Date:</strong> 2025-09-16</li>
+<li><strong>Prepared by:</strong> TestSprite AI Team</li>
+</ul>
+<hr>
+<h2>2️⃣ Requirement Validation Summary</h2>
+<h3>Requirement: GET /api/health</h3>
+<ul>
+<li><strong>Description:</strong> Test the /api/health GET endpoint to ensure it returns a 200 status with service health and environment variable presence information. Verify that it handles server errors gracefully with a 500 status.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC001</li>
+<li><strong>Test Name:</strong> verify_health_check_endpoint_returns_service_status_and_env_info</li>
+<li><strong>Test Code:</strong> <a href="./TC001_verify_health_check_endpoint_returns_service_status_and_env_info.py">TC001_verify_health_check_endpoint_returns_service_status_and_env_info.py</a></li>
+<li><strong>Test Visualization and Result:</strong> https://www.testsprite.com/dashboard/mcp/tests/153d1911-458b-4263-88e2-6612c4343454/c6094a12-d94c-49bd-8bab-8e3a55b9f5f8</li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> LOW</li>
+<li><strong>Analysis / Findings:</strong> The test passed because the /api/health GET endpoint correctly returns a 200 status with the expected service health and environment variable information, and it gracefully handles server errors with a 500 status.</li>
+</ul>
+<hr>
+<h3>Requirement: GET /api/crypto-prices</h3>
+<ul>
+<li><strong>Description:</strong> Test the /api/crypto-prices GET endpoint to confirm it returns the top 10 cryptocurrencies by market cap. Verify the caching mechanism prevents stale data beyond 45 seconds and retry logic works on fetch failures.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC002</li>
+<li><strong>Test Name:</strong> validate_crypto_prices_endpoint_returns_top_10_coins_with_caching_and_retry</li>
+<li><strong>Test Code:</strong> <a href="./TC002_validate_crypto_prices_endpoint_returns_top_10_coins_with_caching_and_retry.py">TC002_validate_crypto_prices_endpoint_returns_top_10_coins_with_caching_and_retry.py</a></li>
+<li><strong>Test Visualization and Result:</strong> https://www.testsprite.com/dashboard/mcp/tests/153d1911-458b-4263-88e2-6612c4343454/4f06fba2-32ce-4a9d-ac59-8ee3aeb17081</li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> LOW</li>
+<li><strong>Analysis / Findings:</strong> The test passed because the /api/crypto-prices GET endpoint successfully returns the top 10 cryptocurrencies by market cap, implements the caching mechanism to prevent stale data beyond 45 seconds, and includes retry logic that works on fetch failures.</li>
+</ul>
+<hr>
+<h3>Requirement: POST /api/save-email-to-supabase</h3>
+<ul>
+<li><strong>Description:</strong> Test the /api/save-email-to-supabase POST endpoint to ensure it accepts valid email addresses and subscribes them. Verify idempotent behavior when subscribing an already subscribed email. Check for proper error responses on invalid email, method not allowed, and server errors.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC003</li>
+<li><strong>Test Name:</strong> test_subscribe_email_endpoint_for_valid_email_and_idempotency</li>
+<li><strong>Test Code:</strong> <a href="./TC003_test_subscribe_email_endpoint_for_valid_email_and_idempotency.py">TC003_test_subscribe_email_endpoint_for_valid_email_and_idempotency.py</a></li>
+<li><strong>Test Visualization and Result:</strong> https://www.testsprite.com/dashboard/mcp/tests/153d1911-458b-4263-88e2-6612c4343454/efc25a37-3059-4bd5-9326-74779ab798da</li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> LOW</li>
+<li><strong>Analysis / Findings:</strong> The test passed confirming that the /api/save-email-to-supabase POST endpoint correctly accepts valid email addresses, subscribes them with idempotent behavior, and returns proper errors for invalid email input, method not allowed, and server errors.</li>
+</ul>
+<hr>
+<h2>3️⃣ Coverage &amp; Matching Metrics</h2>
+<ul>
+<li>100% of detected backend endpoints tested</li>
+<li>100% of tests passed</li>
+<li><strong>Key gaps / risks:</strong></li>
+</ul>
+<blockquote>
+<p>Consider adding negative tests for rate limiting and Supabase failures.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Total Tests</th>
+<th>✅ Passed</th>
+<th>⚠️ Partial</th>
+<th>❌ Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /api/health</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>GET /api/crypto-prices</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>POST /api/save-email-to-supabase</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+    </body>
+    </html>
+  

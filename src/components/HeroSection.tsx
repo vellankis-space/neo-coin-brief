@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, Users, Loader2, Twitter } from 'lucide-react';
 import NewsletterPreviewCard from './NewsletterPreviewCard';
+import { toast } from '@/components/ui/sonner';
+import { Rocket } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,18 +16,20 @@ const HeroSection: React.FC = () => {
 
     if (!email) {
       setError('Email address is required.');
+      toast.error('Please enter your email address.');
       return;
     }
 
     if (!/^(([^<>()[\]\\.,;:\s@\"]+(\\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
       setError('Please enter a valid email address.');
+      toast.error('Invalid email format.');
       return;
     }
 
     setIsLoading(true);
 
     try {
-      // 1. Save email to Supabase
+      // Save email to Supabase Auth
       const saveEmailResponse = await fetch('/api/save-email-to-supabase', {
         method: 'POST',
         headers: {
@@ -34,14 +38,22 @@ const HeroSection: React.FC = () => {
         body: JSON.stringify({ email }),
       });
 
+      const responseData = await saveEmailResponse.json();
+
       if (!saveEmailResponse.ok) {
-        const errorData = await saveEmailResponse.json();
-        throw new Error(errorData.error || 'Failed to save email.');
+        const msg = responseData?.error || 'Failed to save email.';
+        toast.error(msg);
+        throw new Error(msg);
       }
 
-      // 2. Redirect to Cashfree Payment Form
-      const paymentFormUrl = `https://payments.cashfree.com/forms/twitter-signals?customerEmail=${encodeURIComponent(email)}`;
-      window.location.href = paymentFormUrl;
+      const successMsg = responseData?.message || 'Subscribed! You\'re now on the AI crypto brief.';
+
+      // Show success toast with crypto-themed icon and message
+      toast.success(successMsg, {
+        description: 'We\'ll send the sharpest X (Twitter) insights and market movers.',
+        icon: <Rocket className="h-5 w-5" />,
+      });
+      setEmail('');
 
     } catch (error: any) {
       console.error('Subscription error:', error);
@@ -108,7 +120,7 @@ const HeroSection: React.FC = () => {
                   {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe Now'}
                 </Button>
             </div>
-            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {/* Removed inline error text; toasts now handle messaging */}
           </div>
           
           {/* Right Column - Newsletter Preview */}

@@ -1,0 +1,15 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "neo-coin-brief",
+    "projectPath": "/Users/apple/Desktop/neo-coin-brief",
+    "testIds": [],
+    "additionalInstruction": "Use headless browser. Cover key routes: /, /about, /privacy, /terms, /contact, and 404 for unknown. Verify navbar links, footer presence, and that crypto widget renders without runtime errors by mocking /api/crypto-prices. Mock Supabase env to avoid network. Take screenshots for each view.",
+    "envs": {
+      "API_KEY": "sk-user-wrSfaQqoh5-cIoaklinkzmvTCJjG91ESU8LdcJNvsA4SOvS9CKa1OQIJFN9lHm86EGBueQ0JmJPTIz0iMJDkjT0G3aGLolxKdus4N__dx0XkpYt72TQAp2zrb7blaIajeAM"
+    }
+  }
+}

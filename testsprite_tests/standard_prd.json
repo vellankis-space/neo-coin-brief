@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "project": "Neo Coin Brief",
+    "date": "2025-09-13",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "Neo Coin Brief is a modern React-based cryptocurrency newsletter landing page that features real-time cryptocurrency price tracking and seamless newsletter subscription functionality. It leverages an advanced tech stack to deliver an engaging, responsive, and visually rich user experience with crypto-themed design elements, including dark/light mode and glass morphism effects.",
+  "core_goals": [
+    "Provide real-time and reliable cryptocurrency price information to users via a scrolling marquee ticker.",
+    "Allow users to easily subscribe to the newsletter through an email capture form integrated with Supabase backend.",
+    "Ensure a highly responsive and mobile-friendly design optimized for multiple device sizes.",
+    "Offer intuitive theme toggling between dark and light modes for enhanced user accessibility.",
+    "Maintain modern UI aesthetics using gradients, glass morphism, and smooth animations to engage users.",
+    "Optimize site SEO with appropriate meta tags and semantic HTML structure for better search engine ranking."
+  ],
+  "key_features": [
+    "Real-time Crypto Price Ticker fetching data from CoinGecko API with caching and retry mechanisms for high availability.",
+    "Newsletter subscription form integrated with Supabase to create or update user records securely.",
+    "Responsive design architecture employing mobile-first methodologies and Tailwind CSS.",
+    "Dark and Light mode toggle implemented using next-themes library ensuring a smooth user experience.",
+    "Modern UI with glass morphism effects, crypto-themed gradient color palettes, and animations leveraging shadcn/ui and Radix UI primitives.",
+    "Multiple client-side routes including About, Privacy Policy, and Terms & Conditions pages implemented via React Router DOM.",
+    "Robust backend serverless API endpoints for health checks, crypto price fetching, and email subscriptions deployed on Vercel.",
+    "Type-safe application development using TypeScript with React Query state management and Axios for API communications."
+  ],
+  "user_flow_summary": [
+    "Users land on the homepage and view an auto-scrolling marquee showing the latest cryptocurrency prices updated in near real-time.",
+    "Users can toggle between light and dark modes for personalized visual preference.",
+    "Users navigate through informational pages such as About, Privacy Policy, and Terms & Conditions via client-side routing.",
+    "Users enter their email address into a subscription form and submit to subscribe to the newsletter.",
+    "On submission, the email is sent to a serverless function that validates and stores the email in Supabase, then confirms subscription status to the user.",
+    "The system handles failed requests and retries API calls to CoinGecko ensuring data freshness and resilience.",
+    "The user interface updates seamlessly to reflect subscription success or failure states with appropriate messages."
+  ],
+  "validation_criteria": [
+    "Crypto prices are fetched from CoinGecko API with a cache expiry of 45 seconds and retry logic implemented on failures.",
+    "Email subscription accepts valid emails only and returns clear success or error messages based on the API response.",
+    "The newsletter subscription correctly creates or updates user records in Supabase, verified by DB inspection.",
+    "Application must pass responsive design tests on various device screen sizes including mobile and tablet breakpoints.",
+    "Dark and light mode toggling functions correctly and UI updates accordingly without visual regressions.",
+    "All API endpoints respond with appropriate HTTP status codes such as 200, 400, 405, or 500 depending on request validity and server status.",
+    "The UI components maintain consistent styling per the crypto-themed design system specified in Tailwind configuration.",
+    "Site navigation is smooth with no page reloads and all client-side routes function correctly.",
+    "Code is built and deployed successfully on Vercel with correct environment variable configurations."
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "TypeScript",
+      "React + Vite",
+      "TailwindCSS",
+      "Node.js serverless routes (Vercel style)",
+      "Supabase",
+      "Axios"
+    ],
+    "features": [
+      {
+        "name": "Health Check",
+        "description": "Simple API endpoint to verify server health and env presence",
+        "files": [
+          "api/health.js"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "info": {
+            "title": "Health API",
+            "version": "1.0.0"
+          },
+          "paths": {
+            "/api/health": {
+              "get": {
+                "summary": "Health status",
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  },
+                  "500": {
+                    "description": "Server error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Crypto Prices",
+        "description": "Fetches top crypto prices via CoinGecko with retry and cache",
+        "files": [
+          "api/crypto-prices.js"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "info": {
+            "title": "Crypto Prices API",
+            "version": "1.0.0"
+          },
+          "paths": {
+            "/api/crypto-prices": {
+              "get": {
+                "summary": "Get top crypto prices",
+                "responses": {
+                  "200": {
+                    "description": "List of prices"
+                  },
+                  "500": {
+                    "description": "Failed to fetch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Subscribe Email",
+        "description": "Creates or updates a user in Supabase for newsletter subscription",
+        "files": [
+          "api/save-email-to-supabase.js",
+          "src/integrations/supabase/auth.ts",
+          "supabase/**"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "info": {
+            "title": "Subscription API",
+            "version": "1.0.0"
+          },
+          "paths": {
+            "/api/save-email-to-supabase": {
+              "post": {
+                "summary": "Subscribe email",
+                "requestBody": {
+                  "required": true
+                },
+                "responses": {
+                  "200": {
+                    "description": "Subscribed or already subscribed"
+                  },
+                  "400": {
+                    "description": "Invalid email"
+                  },
+                  "405": {
+                    "description": "Method not allowed"
+                  },
+                  "500": {
+                    "description": "Server or supabase error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

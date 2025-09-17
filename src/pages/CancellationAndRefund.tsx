@@ -20,24 +20,10 @@ const CancellationAndRefund = () => {
           
           <div className="space-y-8 text-white/80">
             <section>
-              <h2 className="text-2xl font-semibold text-white mb-4">Refund Policy</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">Subscription Policy</h2>
               <p>
-                All sales are final. We do not offer refunds for any subscriptions or services once the payment is made. 
-                By making a payment, you acknowledge and agree to this no-refund policy.
+                Our newsletter service is completely free to subscribe to. There are no charges or payments required to receive our crypto insights.
               </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-semibold text-white mb-4">Cancellation Policy</h2>
-              <p className="mb-4">
-                You may cancel your subscription at any time. However, the cancellation will only take effect after your initial one-month subscription period has ended. 
-                You will continue to have access to the service until the end of your billing cycle.
-              </p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Cancellation is available after the first month of your subscription.</li>
-                <li>To cancel, please visit your account settings or contact our support team.</li>
-                <li>You will not be charged for the next billing cycle after cancellation.</li>
-              </ul>
             </section>
 
             <section>

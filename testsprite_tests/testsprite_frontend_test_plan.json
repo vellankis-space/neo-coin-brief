@@ -1,0 +1,476 @@
+[
+  {
+    "id": "TC001",
+    "title": "Verify Health Check API returns 200 OK",
+    "description": "Send GET request to /api/health and verify the response status code is 200 and body indicates server is healthy.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send GET request to /api/health endpoint"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate response status code is 200"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate response body indicates health status as OK"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Health Check API returns 500 on server error",
+    "description": "Simulate server error and verify GET /api/health returns HTTP 500 with appropriate error response.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate server environment failure or server error"
+      },
+      {
+        "type": "action",
+        "description": "Send GET request to /api/health endpoint"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate response status code is 500"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate error message is relevant and informative"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Fetch real-time crypto prices successfully",
+    "description": "Fetch crypto prices from /api/crypto-prices and verify correct response including caching and retry behavior.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send GET request to /api/crypto-prices endpoint"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response status code is 200"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response contains list of cryptocurrency prices with correct data format"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify caching header or mechanism is active with 45 seconds expiry"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Crypto Prices API retry on failure",
+    "description": "Simulate CoinGecko API failure during fetch and check that the endpoint implements retry before failing.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Mock or simulate failure response from CoinGecko API"
+      },
+      {
+        "type": "action",
+        "description": "Send GET request to /api/crypto-prices endpoint"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify retry attempts are made according to retry policy"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify eventual response status is 500 if retries exhausted"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Subscribe with valid email successfully",
+    "description": "Submit a valid email on the subscription form and verify successful subscription via API and UI confirmation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to subscription form"
+      },
+      {
+        "type": "action",
+        "description": "Input a valid, properly formatted email address"
+      },
+      {
+        "type": "action",
+        "description": "Submit the subscription form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify POST request to /api/save-email-to-supabase is made with correct data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API returns 200 status and success message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI displays confirmation of successful subscription"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Supabase database contains the new or updated user record"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Subscription form validates invalid email input",
+    "description": "Enter invalid email formats in the subscription form and verify proper client-side validation and error messages without submitting the API call.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to subscription form"
+      },
+      {
+        "type": "action",
+        "description": "Input invalid email addresses such as missing '@', missing domain, empty string, or malformed format"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit the form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that form prevents submission"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify appropriate error messages are displayed to the user"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Subscription API returns 400 on invalid email",
+    "description": "Send a POST request with invalid email format to /api/save-email-to-supabase and verify HTTP 400 response with error message.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send POST request to /api/save-email-to-supabase with invalid email payload"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response status code is 400"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response contains descriptive error message about invalid email"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Subscription API returns 405 on incorrect method",
+    "description": "Send a GET request to /api/save-email-to-supabase and verify HTTP 405 Method Not Allowed response.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send GET request to /api/save-email-to-supabase endpoint"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response status code is 405"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response body indicates method is not allowed"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Subscription API handles internal server errors",
+    "description": "Simulate Supabase or server error during subscription and verify API returns 500 with appropriate message.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate server or Supabase failure when processing subscription"
+      },
+      {
+        "type": "action",
+        "description": "Send POST request to /api/save-email-to-supabase with valid email"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response status code is 500"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify response contains clear error message"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Verify newsletter subscription form UI handle success and failure states",
+    "description": "Test the form UI shows correct messages and state changes on subscription success and failure responses.",
+    "category": "ui",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Submit a valid email and simulate successful subscription response"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify success message is displayed to the user"
+      },
+      {
+        "type": "action",
+        "description": "Submit a valid email and simulate failure response from API"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error message is displayed appropriately"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Verify dark mode toggle functionality on homepage",
+    "description": "Test toggling between dark and light mode using the theme toggle and verify UI updates accordingly without visual glitches.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage with default theme"
+      },
+      {
+        "type": "action",
+        "description": "Click theme toggle button to switch themes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI colors, backgrounds, and text adapt to selected theme"
+      },
+      {
+        "type": "action",
+        "description": "Toggle back to original theme"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI updates back without visual glitches or delays"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Verify real-time price ticker auto-scrolling and updates",
+    "description": "Check that the marquee ticker scrolls continuously and refreshes prices in near real-time without manual refresh.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage with active price ticker"
+      },
+      {
+        "type": "assertion",
+        "description": "Observe continuous left-to-right or right-to-left scrolling of crypto prices"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify prices update automatically approximately every 45 seconds using cached API data"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Verify responsive design across device sizes",
+    "description": "Test site appearance and functionality on various screen sizes including mobile, tablet, and desktop ensuring layout and components adapt properly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open site on mobile viewport (e.g., 375x667)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify content is readable, buttons are accessible, and layout is mobile-friendly"
+      },
+      {
+        "type": "action",
+        "description": "Resize to tablet viewport (e.g., 768x1024)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify smooth transitions and responsive layout adjustments"
+      },
+      {
+        "type": "action",
+        "description": "Open site on desktop viewport (e.g., 1440x900)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify full layout with no overlapping or visual issues"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Verify smooth client-side route navigation",
+    "description": "Navigate between Home, About, Privacy Policy, and Terms & Conditions pages and verify routes load without full page reloads and content is correct.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start on homepage"
+      },
+      {
+        "type": "action",
+        "description": "Click link to About page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify About page content is displayed without full page reload"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Privacy Policy page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify correct text and no reloads"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Terms & Conditions page"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate route loads smoothly with expected content"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Verify consistent crypto-themed UI styling and animations",
+    "description": "Check UI components for correct gradients, glass morphism effects, crypto-themed color palettes, and smooth animations as per design specifications.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage with default and toggled themes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify card backgrounds exhibit glass morphism effect"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify crypto-themed gradient palettes are applied on elements"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify smooth animations on price ticker and UI transitions"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Verify SEO meta tags and semantic HTML structure are present",
+    "description": "Inspect page head and HTML markup to verify existence of meta tags for description, keywords, viewport, titles and use of semantic elements.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage and inspect HTML source"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify meta tags for title, description, viewport, keywords are present and correctly set"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify use of semantic HTML elements such as <main>, <header>, <nav>, <footer>, <section>"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Verify API endpoints return correct status codes for various scenarios",
+    "description": "Test /api/health, /api/crypto-prices, and /api/save-email-to-supabase for valid and invalid requests and confirm appropriate HTTP codes such as 200, 400, 405, and 500 are returned.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send valid GET request to /api/health and verify status 200"
+      },
+      {
+        "type": "action",
+        "description": "Send invalid method POST request to /api/health and verify 405 response"
+      },
+      {
+        "type": "action",
+        "description": "Send valid GET request to /api/crypto-prices and verify status 200"
+      },
+      {
+        "type": "action",
+        "description": "Send POST request with inappropriate method to /api/crypto-prices and verify 405"
+      },
+      {
+        "type": "action",
+        "description": "Send POST request with valid and invalid emails to /api/save-email-to-supabase and verify 200 or 400 respectively"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Verify successful build and deployment on Vercel",
+    "description": "Perform full build of application with environment variables and deploy on Vercel, verifying no build errors and environment configs are correctly used.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run build command for the project using provided TypeScript and Vite configuration"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify build completes successfully without errors"
+      },
+      {
+        "type": "action",
+        "description": "Deploy build to Vercel environment with environment variables set"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify deployment is successful and environment variables are accessible in serverless functions"
+      }
+    ]
+  }
+]

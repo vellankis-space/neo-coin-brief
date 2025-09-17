@@ -22,13 +22,11 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Information We Collect</h2>
               <p className="mb-4">
-                We collect information you provide directly to us, such as when you create an account, 
-                subscribe to our newsletter, or contact us for support. This may include:
+                We collect information when you subscribe to our newsletter, or contact us for support. This may include:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Email address</li>
                 <li>Name and contact information</li>
-                <li>Payment information (not stored by us)</li>
                 <li>Communication preferences</li>
               </ul>
             </section>
@@ -38,7 +36,6 @@ const PrivacyPolicy = () => {
               <p className="mb-4">We use the information we collect to:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Provide and deliver our crypto insights newsletter</li>
-                <li>Process payments and manage subscriptions</li>
                 <li>Send you important updates about our service</li>
                 <li>Respond to your comments and questions</li>
                 <li>Improve our AI algorithms and service quality</li>

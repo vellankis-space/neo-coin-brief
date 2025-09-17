@@ -3,7 +3,6 @@ import CryptoTicker from '@/components/CryptoTicker';
 import HeroSection from '@/components/HeroSection';
 import HowItWorks from '@/components/HowItWorks';
 import Features from '@/components/Features';
-import Pricing from '@/components/Pricing';
 import SocialProof from '@/components/SocialProof';
 import Faq from '@/components/Faq';
 import CryptoPopup from '@/components/CryptoPopup';
@@ -29,11 +28,6 @@ const Index = () => {
       {/* Features overview */}
       <AnimatedSection>
         <Features />
-      </AnimatedSection>
-
-      {/* Pricing Section */}
-      <AnimatedSection>
-        <Pricing />
       </AnimatedSection>
 
       {/* Social proof section */}

@@ -73,11 +73,10 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-white mb-4">Subscription and Billing</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">Subscription</h2>
               <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Subscriptions are billed automatically on a recurring basis</li>
-                <li>You can cancel your subscription at any time</li>
-                <li>All payments are processed securely through Razorpay</li>
+                <li>Subscriptions to our newsletter are completely free</li>
+                <li>You can unsubscribe from our newsletter at any time</li>
               </ul>
             </section>
 

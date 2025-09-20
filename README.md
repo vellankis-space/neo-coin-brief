@@ -1,23 +1,28 @@
 # Neo Coin Brief
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![React](https://img.shields.io/badge/react-%5E18.3.1-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%5E5.5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/vite-%5E5.4.1-blue.svg)](https://vitejs.dev/)
+
 A modern cryptocurrency newsletter landing page built with React, TypeScript, Vite, and Supabase. This application features real-time cryptocurrency price tracking, newsletter subscription functionality, and a responsive design with dark/light mode support.
 
-![Project Screenshot](public/preview.png)
+![Project Screenshot](public/og-image.png)
 
 ## Table of Contents
 
 - [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Demo](#demo)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
 - [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Environment Variables](#environment-variables)
-- [Project Structure](#project-structure)
-- [Available Scripts](#available-scripts)
-- [Technology Stack](#technology-stack)
-- [Components](#components)
+- [Development](#development)
+  - [Available Scripts](#available-scripts)
+  - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
-- [Supabase Integration](#supabase-integration)
-- [Styling](#styling)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
@@ -33,33 +38,79 @@ A modern cryptocurrency newsletter landing page built with React, TypeScript, Vi
 - 📚 SEO optimized with proper meta tags
 - 🛡️ Form validation and error handling
 - 📦 Component-based architecture with shadcn/ui
+- 🔄 Smooth animations with Framer Motion
+- 📊 Analytics integration with Vercel
 
-## Prerequisites
+## Demo
+
+A live demo of the application is available at: [https://neo-coin-brief.vercel.app](https://neo-coin-brief.vercel.app)
+
+## Tech Stack
+
+| Category | Technology |
+|---------|------------|
+| **Frontend** | React 18, TypeScript, Tailwind CSS |
+| **UI Components** | shadcn/ui, Radix UI |
+| **Build Tool** | Vite |
+| **Routing** | React Router DOM |
+| **State Management** | React Query (TanStack Query) |
+| **Animations** | Framer Motion |
+| **Backend** | Serverless functions (Node.js) |
+| **Database** | Supabase |
+| **APIs** | CoinGecko for cryptocurrency prices |
+| **Deployment** | Vercel |
+| **Analytics** | Vercel Analytics |
+
+## Architecture
+
+```mermaid
+graph TD
+    A[Client Browser] --> B[Vite React App]
+    B --> C[Supabase Auth API]
+    B --> D[CoinGecko API]
+    B --> E[Serverless Functions]
+    E --> C
+    E --> D
+```
+
+### Key Components
+
+1. **Frontend**: React application with TypeScript and Tailwind CSS
+2. **UI Layer**: shadcn/ui components with custom styling
+3. **State Management**: React Query for server state, React Context for UI state
+4. **API Layer**: Serverless functions for backend logic
+5. **Data Layer**: Supabase for user authentication and data storage
+6. **External APIs**: CoinGecko for cryptocurrency price data
+
+## Getting Started
+
+### Prerequisites
 
 - [Node.js](https://nodejs.org/) (version 18 or higher) or [Bun](https://bun.sh/)
 - A [Supabase](https://supabase.io/) account
 - A [CoinGecko](https://www.coingecko.com/) API key (optional for price data)
 
-## Getting Started
-
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/neo-coin-brief.git
-   ```
+
+```bash
+git clone https://github.com/your-username/neo-coin-brief.git
+```
 
 2. Navigate to the project directory:
-   ```bash
-   cd neo-coin-brief
-   ```
+
+```bash
+cd neo-coin-brief
+```
 
 3. Install dependencies:
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
+
+```bash
+npm install
+# or
+bun install
+```
 
 ### Environment Variables
 
@@ -79,23 +130,25 @@ To get these values:
 
 **Note**: For security, never commit your actual keys to version control.
 
-### Running the Development Server
+## Development
 
-Start the development server:
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server on port 3000 |
+| `npm run build` | Build for production |
+| `npm run build:dev` | Build for development |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Preview production build locally |
+| `npm run dev:vercel` | Start Vercel development server on port 8080 |
+
+### Project Structure
 
 ```bash
-npm run dev
-# or
-bun run dev
-```
-
-Open your browser to http://localhost:3000
-
-## Project Structure
-
-```
 neo-coin-brief/
 ├── api/                    # Serverless API functions
+├── public/                 # Static assets
 ├── src/
 │   ├── components/         # Reusable UI components
 │   │   └── ui/             # shadcn/ui components
@@ -107,55 +160,9 @@ neo-coin-brief/
 │   ├── App.tsx             # Main application component
 │   ├── main.tsx            # Application entry point
 │   └── index.css           # Global styles and design tokens
-├── public/                 # Static assets
 ├── .env.local              # Environment variables (not committed)
 └── package.json            # Project dependencies and scripts
 ```
-
-## Available Scripts
-
-- `npm run dev` - Start development server on port 3000
-- `npm run build` - Build for production
-- `npm run build:dev` - Build for development
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview production build locally
-- `npm run dev:vercel` - Start Vercel development server on port 8080
-
-## Technology Stack
-
-- **Frontend**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **Routing**: React Router DOM
-- **State Management**: React Query (TanStack Query)
-- **UI Components**: Radix UI primitives with shadcn/ui implementation
-- **Backend**: Serverless functions (Node.js)
-- **Database**: Supabase
-- **APIs**: CoinGecko for cryptocurrency prices
-- **Deployment**: Vercel
-
-## Components
-
-### Core Components
-
-- `CryptoTicker` - Real-time cryptocurrency price display with scrolling marquee
-- `HeroSection` - Main landing page section with newsletter subscription form
-- `HowItWorks` - Process explanation section
-- `Features` - Feature overview with icons
-- `SocialProof` - Testimonials and user statistics
-- `Faq` - Frequently asked questions accordion
-- `Footer` - Site footer with navigation links
-- `CryptoPopup` - Promotional popup for crypto offers
-
-### UI Components
-
-The project uses shadcn/ui components which are built on top of Radix UI primitives:
-- Button
-- Input
-- Toast
-- Tooltip
-- Accordion
-- And more...
 
 ## API Endpoints
 
@@ -187,41 +194,6 @@ Handles newsletter subscription by saving email to Supabase authentication.
 }
 ```
 
-## Supabase Integration
-
-This project uses Supabase for authentication and user management:
-
-1. **Authentication Setup**:
-   - In your Supabase dashboard, go to Authentication > Settings
-   - Make sure "Enable email signup" is turned on
-   - Under "Email Templates", you can customize the confirmation email template if needed
-
-2. **User Management**:
-   - Users are created with email-only signup (no password required)
-   - User metadata tracks subscription status
-   - Service role key is used for server-side operations
-
-## Styling
-
-The project uses Tailwind CSS with a custom design system:
-
-### Design Tokens
-
-- **Fonts**: Montserrat (headings) and Inter (body text)
-- **Colors**: Custom crypto-themed color palette
-  - Bitcoin Orange: `#F7931A`
-  - Ethereum Blue: `#627EEA`
-  - Crypto Gold: `#FFC300`
-  - Positive/Negative indicators for price changes
-- **Gradients**: Custom gradients for hero sections and text
-- **Glass Morphism**: Backdrop blur effects for modern UI
-
-### Responsive Design
-
-- Mobile-first approach
-- Responsive breakpoints for all device sizes
-- Flexible grid layouts using CSS Grid and Flexbox
-
 ## Deployment
 
 This application is configured for deployment on Vercel:
@@ -235,7 +207,19 @@ This application is configured for deployment on Vercel:
 
 The `vercel.json` file handles routing with a fallback to `index.html` for client-side routing.
 
+### Environment Configuration
+
+For production deployment, ensure the following environment variables are set in your Vercel project settings:
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_SUPABASE_URL` | Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
+
 ## Contributing
+
+We welcome contributions to improve Neo Coin Brief! Here's how you can contribute:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -243,6 +227,20 @@ The `vercel.json` file handles routing with a fallback to `index.html` for clien
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a pull request
 
+Please ensure your code follows the existing style and includes appropriate tests.
+
+### Development Guidelines
+
+1. Follow the existing code style and conventions
+2. Write clear, concise commit messages
+3. Add tests for new functionality
+4. Ensure all tests pass before submitting a pull request
+5. Update documentation as needed
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Built with ❤️ using React, TypeScript, and Vercel
